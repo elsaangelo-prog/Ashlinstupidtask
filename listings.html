@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>All Properties — The Angelo Collection</title>
+<meta name="description" content="Browse all 30 luxury properties available through The Angelo Collection, Dubai's premier real estate advisory.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─────────────────────────────────────────────────────── -->
+<nav class="nav dark-page" id="main-nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">ANGELO</span>
+    <span class="nav-logo-sub">The Collection</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html" style="color:var(--champagne-dk)">Properties</a></li>
+    <li><a href="index.html#advisors">Our Advisors</a></li>
+    <li><a href="index.html#mortgage">Finance</a></li>
+    <li><a href="index.html#testimonials">Client Stories</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="toggleFavPanel()" aria-label="Saved properties">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Saved
+      <span class="nav-badge fav-badge" style="display:none">0</span>
+    </button>
+    <a href="index.html#contact" class="btn-nav-cta">Enquire Now</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── MOBILE MENU ─────────────────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-menu-close">✕</button>
+  <a href="index.html">Home</a>
+  <a href="listings.html">Properties</a>
+  <a href="index.html#advisors">Our Advisors</a>
+  <a href="index.html#mortgage">Finance</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<!-- ─── PAGE HERO ───────────────────────────────────────────────────────── -->
+<div class="listings-page-hero">
+  <div class="listings-page-hero-inner">
+    <div>
+      <span class="section-label">Dubai Luxury Real Estate</span>
+      <h1>All Properties</h1>
+      <p>Handpicked residences across Dubai's most prestigious addresses</p>
+    </div>
+    <div class="listings-count" id="listings-count">30 properties found</div>
+  </div>
+  <!-- Mobile search -->
+  <div style="max-width:1300px;margin:2rem auto 0;padding:0 3rem">
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <select class="filter-select" id="filter-area" style="flex:1;min-width:180px">
+        <option value="">All Areas</option>
+        <option>Palm Jumeirah</option>
+        <option>Downtown Dubai</option>
+        <option>Emirates Hills</option>
+        <option>Dubai Marina</option>
+        <option>DIFC</option>
+        <option>Jumeirah Bay Island</option>
+        <option>Al Barari</option>
+        <option>Dubai Hills Estate</option>
+        <option>Jumeirah Golf Estates</option>
+        <option>MBR City</option>
+        <option>Business Bay</option>
+        <option>Jumeirah</option>
+        <option>Bluewaters Island</option>
+        <option>Emaar Beachfront</option>
+        <option>Port de La Mer</option>
+        <option>Dubai Creek Harbour</option>
+        <option>The World Islands</option>
+      </select>
+      <select class="filter-select" id="filter-type" style="flex:1;min-width:150px">
+        <option value="">All Types</option>
+        <option>Villa</option>
+        <option>Penthouse</option>
+        <option>Apartment</option>
+        <option>Mansion</option>
+        <option>Townhouse</option>
+      </select>
+      <select class="sort-select" id="sort-select" style="min-width:180px">
+        <option value="featured">Sort: Featured</option>
+        <option value="price-high">Price: Highest First</option>
+        <option value="price-low">Price: Lowest First</option>
+        <option value="sqft-high">Largest First</option>
+        <option value="newest">Newest First</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ─── LISTINGS LAYOUT ──────────────────────────────────────────────────── -->
+<div class="listings-layout" style="max-width:1600px;margin:0 auto;padding:0 3rem 6rem;display:grid;grid-template-columns:260px 1fr;gap:2.5rem;align-items:start">
+
+  <!-- SIDEBAR FILTERS -->
+  <aside class="filters-sidebar">
+    <div class="filters-title">
+      Refine Search
+      <span class="filters-clear" id="clear-filters">Clear All</span>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Price Range (AED)</span>
+      <div class="price-inputs">
+        <input type="number" class="price-input" id="filter-min-price"
+          placeholder="Min" step="500000">
+        <input type="number" class="price-input" id="filter-max-price"
+          placeholder="Max" step="500000">
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Bedrooms (Min)</span>
+      <div class="bed-buttons">
+        <button class="bed-btn" data-beds="1">1+</button>
+        <button class="bed-btn" data-beds="2">2+</button>
+        <button class="bed-btn" data-beds="3">3+</button>
+        <button class="bed-btn" data-beds="4">4+</button>
+        <button class="bed-btn" data-beds="5">5+</button>
+        <button class="bed-btn" data-beds="6">6+</button>
+        <button class="bed-btn" data-beds="7">7+</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Bathrooms (Min)</span>
+      <div class="bed-buttons">
+        <button class="bed-btn" data-baths="2"
+          onclick="setBathFilter(2,this)">2+</button>
+        <button class="bed-btn" data-baths="3"
+          onclick="setBathFilter(3,this)">3+</button>
+        <button class="bed-btn" data-baths="4"
+          onclick="setBathFilter(4,this)">4+</button>
+        <button class="bed-btn" data-baths="5"
+          onclick="setBathFilter(5,this)">5+</button>
+        <button class="bed-btn" data-baths="6"
+          onclick="setBathFilter(6,this)">6+</button>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Property Features</span>
+      <div class="filter-checkbox">
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Private Beach">
+          <label>Private Beach</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Infinity Pool">
+          <label>Infinity Pool</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Smart Home">
+          <label>Smart Home</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Golf Views">
+          <label>Golf Views</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Home Cinema">
+          <label>Home Cinema</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Helipad">
+          <label>Helipad</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Wine Cellar">
+          <label>Wine Cellar</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Tennis Court">
+          <label>Tennis Court</label>
+        </label>
+        <label class="filter-check-item">
+          <input type="checkbox" class="feature-check" value="Spa">
+          <label>Spa</label>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-group-label">Furnished</span>
+      <select class="filter-select" id="filter-furnished">
+        <option value="">Any</option>
+        <option value="furnished">Furnished</option>
+        <option value="unfurnished">Unfurnished</option>
+      </select>
+    </div>
+
+    <button class="apply-filters-btn" id="apply-filters">Apply Filters</button>
+
+    <!-- MINI MORTGAGE -->
+    <div style="margin-top:2rem;padding:1.25rem;background:var(--forest);border-radius:8px">
+      <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--champagne);margin-bottom:1rem">Quick Finance</div>
+      <div style="font-size:.75rem;color:rgba(255,255,255,.6);margin-bottom:.75rem">Estimate your monthly repayments</div>
+      <div style="margin-bottom:.75rem">
+        <label style="font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:.3rem">Property Price (AED)</label>
+        <input type="number" id="mini-price" value="5000000" step="500000"
+          style="width:100%;padding:.5rem .75rem;background:rgba(255,255,255,.08);border:1px solid rgba(205,177,138,.2);border-radius:4px;color:white;font-size:.85rem;outline:none">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.75rem">
+        <div>
+          <label style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:.3rem">Down %</label>
+          <input type="number" id="mini-down" value="20" min="15" max="50"
+            style="width:100%;padding:.5rem .75rem;background:rgba(255,255,255,.08);border:1px solid rgba(205,177,138,.2);border-radius:4px;color:white;font-size:.85rem;outline:none">
+        </div>
+        <div>
+          <label style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:.3rem">Years</label>
+          <input type="number" id="mini-years" value="25" min="5" max="25"
+            style="width:100%;padding:.5rem .75rem;background:rgba(255,255,255,.08);border:1px solid rgba(205,177,138,.2);border-radius:4px;color:white;font-size:.85rem;outline:none">
+        </div>
+      </div>
+      <div style="text-align:center;font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:.3rem">Est. Monthly Payment</div>
+      <div id="mini-result" style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--champagne)">—</div>
+    </div>
+  </aside>
+
+  <!-- MAIN GRID -->
+  <div class="listings-main">
+    <div class="listings-toolbar">
+      <div class="listings-result-count" id="listings-count-main">30 properties</div>
+      <div class="listings-toolbar-right">
+        <button class="view-toggle-btn active" data-view="grid" aria-label="Grid view">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="view-toggle-btn" data-view="list" aria-label="List view">
+          <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="properties-grid" id="listings-grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr))"></div>
+  </div>
+</div>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">ANGELO</div>
+      <div class="footer-brand-sub">The Collection</div>
+      <p class="footer-bio">Dubai's foremost luxury real estate advisory. Specialising in extraordinary properties across the emirate's most prestigious addresses.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Properties</div>
+      <ul class="footer-links">
+        <li><a href="listings.html">All Properties</a></li>
+        <li><a href="listings.html?type=Villa">Luxury Villas</a></li>
+        <li><a href="listings.html?type=Penthouse">Penthouses</a></li>
+        <li><a href="listings.html?type=Apartment">Apartments</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#advisors">Our Team</a></li>
+        <li><a href="index.html#mortgage">Finance</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-line">
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--champagne);fill:none;stroke-width:1.8;flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/></svg>
+        <span>+971 4 000 1234</span>
+      </div>
+      <div class="footer-contact-line">
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:var(--champagne);fill:none;stroke-width:1.8;flex-shrink:0"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>hello@theangelo.ae</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 The Angelo Collection. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── PANELS & MODALS ───────────────────────────────────────────────────── -->
+<div id="fav-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1049;display:none" onclick="toggleFavPanel()"></div>
+<div class="fav-panel" id="fav-panel">
+  <div class="fav-panel-header">
+    <h3>Saved Properties</h3>
+    <button onclick="toggleFavPanel()" style="color:rgba(255,255,255,.7);font-size:1.2rem">✕</button>
+  </div>
+  <div class="fav-panel-body" id="fav-list"></div>
+</div>
+
+<div class="compare-bar" id="compare-bar">
+  <div class="compare-bar-slots" id="compare-slots"></div>
+  <div class="compare-bar-actions">
+    <span class="compare-count" id="compare-count">0 / 5 selected</span>
+    <button class="compare-bar-btn btn btn-gold" onclick="Compare.openModal()">Compare Now</button>
+    <button class="compare-bar-btn btn btn-outline-white" onclick="Compare.clear()">Clear</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="compare-modal">
+  <div class="modal-box" style="max-width:1400px">
+    <div class="modal-header">
+      <h3>Property Comparison</h3>
+      <button class="modal-close" onclick="Compare.closeModal()">✕</button>
+    </div>
+    <div class="compare-cards" id="compare-cards"></div>
+    <div class="compare-table">
+      <table>
+        <thead><tr id="compare-th-row"><th style="width:160px">Attribute</th></tr></thead>
+        <tbody id="compare-tbody"></tbody>
+      </table>
+    </div>
+    <div class="compare-table" style="margin-top:0">
+      <div style="padding:1rem 0;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forest)">Features & Amenities</div>
+      <table>
+        <thead><tr><th>Feature</th></tr></thead>
+        <tbody id="compare-features-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal-box" id="detail-modal-content"></div>
+</div>
+
+<script>
+function toggleFavPanel() {
+  const panel   = document.getElementById('fav-panel');
+  const overlay = document.getElementById('fav-overlay');
+  const isOpen  = panel.classList.toggle('open');
+  overlay.style.display = isOpen ? 'block' : 'none';
+  if (isOpen) { Favourites.renderPanel(); document.body.classList.add('no-scroll'); }
+  else          document.body.classList.remove('no-scroll');
+}
+
+function setBathFilter(val, btn) {
+  const current = Filter.state.baths;
+  if (current == val) {
+    Filter.state.baths = '';
+    document.querySelectorAll('[data-baths]').forEach(b => b.classList.remove('active'));
+  } else {
+    Filter.state.baths = val;
+    document.querySelectorAll('[data-baths]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  Filter.renderResults();
+}
+
+// Mini mortgage calculator in sidebar
+function initMiniCalc() {
+  const update = () => {
+    const price = parseFloat(document.getElementById('mini-price')?.value || 5000000);
+    const down  = parseFloat(document.getElementById('mini-down')?.value  || 20);
+    const years = parseFloat(document.getElementById('mini-years')?.value || 25);
+    if (!price) return;
+    const res = Mortgage.calc(price, down, 4.49, years);
+    const el  = document.getElementById('mini-result');
+    if (el) el.textContent = 'AED ' + Math.round(res.payment).toLocaleString();
+  };
+  ['mini-price','mini-down','mini-years'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', update);
+  });
+  update();
+}
+
+// Read URL params and pre-fill filters
+function readURLParams() {
+  const params = new URLSearchParams(window.location.search);
+  const area     = params.get('area');
+  const type     = params.get('type');
+  const maxPrice = params.get('maxPrice');
+  const beds     = params.get('beds');
+  if (area) {
+    const el = document.getElementById('filter-area');
+    if (el) { el.value = area; Filter.state.area = area; }
+  }
+  if (type) {
+    const el = document.getElementById('filter-type');
+    if (el) { el.value = type; Filter.state.type = type; }
+  }
+  if (maxPrice) Filter.state.maxPrice = maxPrice;
+  if (beds)     Filter.state.beds = beds;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  readURLParams();
+  initMiniCalc();
+});
+
+// Furnished filter
+document.getElementById('filter-furnished')?.addEventListener('change', e => {
+  Filter.state.furnished = e.target.value;
+  Filter.renderResults();
+});
+</script>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

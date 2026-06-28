@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Angelo Collection — Luxury Real Estate Dubai</title>
+<meta name="description" content="Dubai's most exceptional luxury properties. Penthouses, villas and estates across Palm Jumeirah, Downtown, Emirates Hills and beyond.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ─── NAVIGATION ─────────────────────────────────────────────────────── -->
+<nav class="nav transparent" id="main-nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">ANGELO</span>
+    <span class="nav-logo-sub">The Collection</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html">Properties</a></li>
+    <li><a href="#advisors">Our Advisors</a></li>
+    <li><a href="#mortgage">Finance</a></li>
+    <li><a href="#testimonials">Client Stories</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon-btn" onclick="toggleFavPanel()" aria-label="Saved properties">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Saved
+      <span class="nav-badge fav-badge" style="display:none">0</span>
+    </button>
+    <a href="listings.html" class="btn-nav-cta">View All Properties</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── MOBILE MENU ─────────────────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-menu-close">✕</button>
+  <a href="listings.html">Properties</a>
+  <a href="#advisors">Our Advisors</a>
+  <a href="#mortgage">Finance</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ─── HERO ────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-slides">
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-logo-mark">
+      <span class="hero-brand-name">ANGELO</span>
+      <span class="hero-brand-sub">The Collection</span>
+    </div>
+    <h1 class="hero-tagline serif">Extraordinary Properties.<br>Exceptional Lives.</h1>
+    <p class="hero-sub">Dubai's Most Coveted Addresses</p>
+    <div class="hero-ctas">
+      <a href="listings.html" class="btn-hero-primary">Explore Properties</a>
+      <a href="#advisors" class="btn-hero-outline">Meet Our Advisors</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    <span>Scroll</span>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stats-inner">
+      <div class="hero-stat">
+        <span class="hero-stat-num">AED 2.4B+</span>
+        <span class="hero-stat-label">Total Transactions</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">340+</span>
+        <span class="hero-stat-label">Properties Sold</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">15</span>
+        <span class="hero-stat-label">Years of Excellence</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">98%</span>
+        <span class="hero-stat-label">Client Satisfaction</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SEARCH ───────────────────────────────────────────────────────────── -->
+<div class="search-section">
+  <div class="search-bar">
+    <div class="search-field">
+      <label>Location</label>
+      <select id="qs-area" onchange="">
+        <option value="">All Areas</option>
+        <option>Palm Jumeirah</option>
+        <option>Downtown Dubai</option>
+        <option>Emirates Hills</option>
+        <option>Dubai Marina</option>
+        <option>DIFC</option>
+        <option>Jumeirah Bay Island</option>
+        <option>Al Barari</option>
+        <option>Dubai Hills Estate</option>
+        <option>Jumeirah Golf Estates</option>
+        <option>MBR City</option>
+        <option>Business Bay</option>
+        <option>Jumeirah</option>
+        <option>Bluewaters Island</option>
+        <option>Emaar Beachfront</option>
+        <option>Port de La Mer</option>
+        <option>Dubai Creek Harbour</option>
+        <option>The World Islands</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Property Type</label>
+      <select id="qs-type">
+        <option value="">All Types</option>
+        <option>Villa</option>
+        <option>Penthouse</option>
+        <option>Apartment</option>
+        <option>Mansion</option>
+        <option>Townhouse</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Budget (AED)</label>
+      <select id="qs-budget">
+        <option value="">Any Price</option>
+        <option value="5000000">Up to 5M</option>
+        <option value="10000000">Up to 10M</option>
+        <option value="25000000">Up to 25M</option>
+        <option value="50000000">Up to 50M</option>
+        <option value="100000000">Up to 100M</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Bedrooms</label>
+      <select id="qs-beds">
+        <option value="">Any</option>
+        <option value="2">2+</option>
+        <option value="3">3+</option>
+        <option value="4">4+</option>
+        <option value="5">5+</option>
+        <option value="6">6+</option>
+      </select>
+    </div>
+    <button class="search-btn" onclick="quickSearch()">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Search
+    </button>
+  </div>
+</div>
+
+<!-- ─── MARQUEE ──────────────────────────────────────────────────────────── -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item">Palm Jumeirah</span>
+    <span class="marquee-item">Emirates Hills</span>
+    <span class="marquee-item">Downtown Dubai</span>
+    <span class="marquee-item">Jumeirah Bay Island</span>
+    <span class="marquee-item">Dubai Marina</span>
+    <span class="marquee-item">DIFC</span>
+    <span class="marquee-item">Al Barari</span>
+    <span class="marquee-item">Bluewaters Island</span>
+    <span class="marquee-item">The World Islands</span>
+    <span class="marquee-item">Dubai Hills Estate</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Palm Jumeirah</span>
+    <span class="marquee-item">Emirates Hills</span>
+    <span class="marquee-item">Downtown Dubai</span>
+    <span class="marquee-item">Jumeirah Bay Island</span>
+    <span class="marquee-item">Dubai Marina</span>
+    <span class="marquee-item">DIFC</span>
+    <span class="marquee-item">Al Barari</span>
+    <span class="marquee-item">Bluewaters Island</span>
+    <span class="marquee-item">The World Islands</span>
+    <span class="marquee-item">Dubai Hills Estate</span>
+  </div>
+</div>
+
+<!-- ─── WHY ANGELO ───────────────────────────────────────────────────────── -->
+<section class="why-section section">
+  <div class="section-header centered">
+    <span class="section-label">Why The Angelo Collection</span>
+    <h2 class="section-title">The Standard for Luxury</h2>
+    <p class="section-sub">For over 15 years, we have set the benchmark for ultra-premium real estate in Dubai, guided by an unwavering commitment to discretion, expertise, and exceptional results.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+      </div>
+      <h3 class="why-title">Off-Market Access</h3>
+      <p class="why-text">Over 60% of our transactions are off-market. Our relationships open doors that simply don't exist elsewhere.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3 class="why-title">Curated Clientele</h3>
+      <p class="why-text">We serve UHNW individuals, family offices, and sovereign wealth funds with absolute discretion and personalised service.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <h3 class="why-title">Record-Breaking Prices</h3>
+      <p class="why-text">Our vendors consistently achieve above-market results. In 2024, we secured 14% above average across our portfolio.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3 class="why-title">Seamless Experience</h3>
+      <p class="why-text">From search to handover, our concierge team manages every detail — legal, financial, furnishing, and beyond.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURED LISTINGS ─────────────────────────────────────────────────── -->
+<section class="section section-cream" id="properties">
+  <div class="section-header">
+    <span class="section-label">Curated Selection</span>
+    <h2 class="section-title">Exclusive Properties</h2>
+    <p class="section-sub">A handpicked portfolio of Dubai's most extraordinary residences, available exclusively through The Angelo Collection.</p>
+  </div>
+  <div class="properties-grid" id="featured-grid"></div>
+  <div class="view-all-wrap">
+    <a href="listings.html" class="btn btn-primary">
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      View All 30 Properties
+    </a>
+  </div>
+</section>
+
+<!-- ─── ADVISORS ─────────────────────────────────────────────────────────── -->
+<section class="advisors-section" id="advisors">
+  <div class="section-header" style="max-width:1300px;margin:0 auto 3.5rem">
+    <span class="section-label">Expertise & Dedication</span>
+    <h2 class="section-title">Your Trusted Advisors</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6)">Our team combines decades of luxury real estate expertise with an intimate knowledge of Dubai's most coveted addresses.</p>
+  </div>
+  <div class="advisors-grid" id="advisors-grid"></div>
+</section>
+
+<!-- ─── TESTIMONIALS ──────────────────────────────────────────────────────── -->
+<section class="testimonials-section" id="testimonials">
+  <div class="section-header centered">
+    <span class="section-label">Client Stories</span>
+    <h2 class="section-title">Voices of Trust</h2>
+    <p class="section-sub">The experiences of our clients speak with greater eloquence than any advertisement.</p>
+  </div>
+  <div class="testimonials-track" id="testimonials-track"></div>
+</section>
+
+<!-- ─── MORTGAGE CALCULATOR ───────────────────────────────────────────────── -->
+<section class="mortgage-section" id="mortgage">
+  <div class="section-header" style="max-width:1100px;margin:0 auto 3.5rem">
+    <span class="section-label">Dubai Property Finance</span>
+    <h2 class="section-title">Mortgage Calculator</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.6)">Understand your financing options. UAE mortgage rules allow up to 80% LTV for residents and 75% for non-residents. All calculations are indicative.</p>
+  </div>
+  <div class="mortgage-wrap">
+    <!-- FORM -->
+    <div class="mortgage-form">
+      <div class="form-group">
+        <div class="form-label">Property Price (AED) <span id="calc-price-val">AED 5,000,000</span></div>
+        <input type="range" class="form-range" id="calc-price"
+          min="1000000" max="50000000" step="500000" value="5000000">
+        <div class="range-ticks"><span>AED 1M</span><span>AED 25M</span><span>AED 50M</span></div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Down Payment <span id="calc-down-val">20%</span></div>
+        <input type="range" class="form-range" id="calc-down"
+          min="15" max="50" step="1" value="20">
+        <div class="range-ticks"><span>15%</span><span>30%</span><span>50%</span></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">Interest Rate <span id="calc-rate-val">4.49%</span></div>
+          <input type="range" class="form-range" id="calc-rate"
+            min="2" max="8" step="0.01" value="4.49">
+          <div class="range-ticks"><span>2%</span><span>5%</span><span>8%</span></div>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Loan Term <span id="calc-years-val">25 years</span></div>
+          <input type="range" class="form-range" id="calc-years"
+            min="5" max="25" step="1" value="25">
+          <div class="range-ticks"><span>5yr</span><span>15yr</span><span>25yr</span></div>
+        </div>
+      </div>
+      <!-- Dubai-specific fees info -->
+      <div style="margin-top:1.75rem;padding:1.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(205,177,138,.12);border-radius:8px">
+        <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--champagne);margin-bottom:1rem">Dubai Purchase Costs (One-Time)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+          <div><div style="font-size:.7rem;color:rgba(255,255,255,.4)">DLD Transfer Fee (4%)</div><div style="font-size:.9rem;font-weight:600;color:var(--white)" id="dld-fee">—</div></div>
+          <div><div style="font-size:.7rem;color:rgba(255,255,255,.4)">Mortgage Registration (0.25%)</div><div style="font-size:.9rem;font-weight:600;color:var(--white)" id="reg-fee">—</div></div>
+          <div><div style="font-size:.7rem;color:rgba(255,255,255,.4)">Agent Commission (2%)</div><div style="font-size:.9rem;font-weight:600;color:var(--white)" id="agent-fee">—</div></div>
+          <div><div style="font-size:.7rem;color:rgba(255,255,255,.4)">Valuation Fee</div><div style="font-size:.9rem;font-weight:600;color:var(--white)">AED 2,500–3,500</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="mortgage-results">
+      <div class="mortgage-monthly">
+        <span class="mortgage-monthly-label">Estimated Monthly Payment</span>
+        <span class="mortgage-monthly-amount" id="monthly-payment">—</span>
+        <span class="mortgage-monthly-sub">Principal + Interest</span>
+      </div>
+      <div class="mortgage-breakdown">
+        <div class="mortgage-row">
+          <span class="mortgage-row-label">Property Price</span>
+          <span class="mortgage-row-value" id="calc-price-display">—</span>
+        </div>
+        <div class="mortgage-row">
+          <span class="mortgage-row-label">Down Payment</span>
+          <span class="mortgage-row-value" id="down-amount">—</span>
+        </div>
+        <div class="mortgage-row">
+          <span class="mortgage-row-label">Loan Amount</span>
+          <span class="mortgage-row-value highlight" id="total-loan">—</span>
+        </div>
+        <div class="mortgage-divider"></div>
+        <div class="mortgage-row">
+          <span class="mortgage-row-label">Total Interest Paid</span>
+          <span class="mortgage-row-value" id="total-interest">—</span>
+        </div>
+        <div class="mortgage-row">
+          <span class="mortgage-row-label">Total Amount Repaid</span>
+          <span class="mortgage-row-value highlight" id="total-payment">—</span>
+        </div>
+      </div>
+      <div class="mortgage-bar-wrap">
+        <div class="mortgage-bar-label">
+          <span>Principal <span id="principal-pct">—</span></span>
+          <span>Interest <span id="interest-pct">—</span></span>
+        </div>
+        <div class="mortgage-bar-track">
+          <div class="mortgage-bar-fill" id="interest-bar" style="width:0%"></div>
+        </div>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="listings.html" class="btn btn-gold" style="width:100%;justify-content:center">
+          Browse Properties
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ──────────────────────────────────────────────────────────── -->
+<section class="section section-cream" id="contact">
+  <div class="section-header centered">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-title">Begin Your Journey</h2>
+    <p class="section-sub">Whether you are seeking your dream home or a world-class investment, our advisors are ready to guide you with discretion and expertise.</p>
+  </div>
+  <div style="max-width:680px;margin:0 auto">
+    <form onsubmit="handleContactForm(event)" style="display:grid;gap:1.25rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+        <div>
+          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">First Name</label>
+          <input type="text" placeholder="James" required
+            style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+        </div>
+        <div>
+          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Last Name</label>
+          <input type="text" placeholder="Whitfield" required
+            style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+        </div>
+      </div>
+      <div>
+        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Email</label>
+        <input type="email" placeholder="james@example.com" required
+          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+      </div>
+      <div>
+        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Phone</label>
+        <input type="tel" placeholder="+971 50 000 0000"
+          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+      </div>
+      <div>
+        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Message</label>
+        <textarea rows="4" placeholder="I am looking for a luxury villa on Palm Jumeirah..."
+          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;resize:vertical"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="justify-content:center;padding:1rem">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">ANGELO</div>
+      <div class="footer-brand-sub">The Collection</div>
+      <p class="footer-bio">Dubai's foremost luxury real estate advisory. Specialising in extraordinary properties across the emirate's most prestigious addresses.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Properties</div>
+      <ul class="footer-links">
+        <li><a href="listings.html">All Properties</a></li>
+        <li><a href="listings.html?type=Villa">Luxury Villas</a></li>
+        <li><a href="listings.html?type=Penthouse">Penthouses</a></li>
+        <li><a href="listings.html?type=Apartment">Apartments</a></li>
+        <li><a href="listings.html?type=Mansion">Mansions</a></li>
+        <li><a href="listings.html?area=Palm+Jumeirah">Palm Jumeirah</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#">Property Sales</a></li>
+        <li><a href="#">Off-Market Properties</a></li>
+        <li><a href="#">Investment Advisory</a></li>
+        <li><a href="#">Property Management</a></li>
+        <li><a href="#mortgage">Mortgage Advice</a></li>
+        <li><a href="#">Relocation Services</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <div class="footer-contact-line">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Level 12, DIFC Gate Building, Dubai, UAE</span>
+      </div>
+      <div class="footer-contact-line">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.05z"/></svg>
+        <span>+971 4 000 1234</span>
+      </div>
+      <div class="footer-contact-line">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>hello@theangelo.ae</span>
+      </div>
+      <div class="rera-badge" style="margin-top:1rem;display:inline-flex">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--champagne);fill:none;stroke-width:2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        RERA Registered · Broker No. 12345
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 The Angelo Collection. All rights reserved.</span>
+    <div style="display:flex;gap:1.5rem">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── FAVOURITES PANEL ──────────────────────────────────────────────────── -->
+<div id="fav-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1049;display:none"
+  onclick="toggleFavPanel()"></div>
+<div class="fav-panel" id="fav-panel">
+  <div class="fav-panel-header">
+    <h3>Saved Properties</h3>
+    <button onclick="toggleFavPanel()" style="color:rgba(255,255,255,.7);font-size:1.2rem">✕</button>
+  </div>
+  <div class="fav-panel-body" id="fav-list"></div>
+</div>
+
+<!-- ─── COMPARE BAR ──────────────────────────────────────────────────────── -->
+<div class="compare-bar" id="compare-bar">
+  <div class="compare-bar-slots" id="compare-slots"></div>
+  <div class="compare-bar-actions">
+    <span class="compare-count" id="compare-count">0 / 5 selected</span>
+    <button class="compare-bar-btn btn btn-gold" onclick="Compare.openModal()">Compare</button>
+    <button class="compare-bar-btn btn btn-outline-white" onclick="Compare.clear()">Clear</button>
+  </div>
+</div>
+
+<!-- ─── COMPARE MODAL ────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="compare-modal">
+  <div class="modal-box" style="max-width:1400px">
+    <div class="modal-header">
+      <h3>Property Comparison</h3>
+      <button class="modal-close" onclick="Compare.closeModal()">✕</button>
+    </div>
+    <div class="compare-cards" id="compare-cards"></div>
+    <div class="compare-table">
+      <table>
+        <thead>
+          <tr id="compare-th-row">
+            <th style="width:160px">Attribute</th>
+          </tr>
+        </thead>
+        <tbody id="compare-tbody"></tbody>
+      </table>
+    </div>
+    <div class="compare-table" style="margin-top:0">
+      <div style="padding:1rem 0;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--forest)">Features & Amenities</div>
+      <table>
+        <thead><tr><th>Feature</th></tr></thead>
+        <tbody id="compare-features-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── DETAIL MODAL ─────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal-box" id="detail-modal-content"></div>
+</div>
+
+<script>
+function quickSearch() {
+  const area   = document.getElementById('qs-area').value;
+  const type   = document.getElementById('qs-type').value;
+  const budget = document.getElementById('qs-budget').value;
+  const beds   = document.getElementById('qs-beds').value;
+  let url = 'listings.html?';
+  if (area)   url += 'area=' + encodeURIComponent(area) + '&';
+  if (type)   url += 'type=' + encodeURIComponent(type) + '&';
+  if (budget) url += 'maxPrice=' + budget + '&';
+  if (beds)   url += 'beds=' + beds;
+  window.location.href = url;
+}
+
+function toggleFavPanel() {
+  const panel   = document.getElementById('fav-panel');
+  const overlay = document.getElementById('fav-overlay');
+  const isOpen  = panel.classList.toggle('open');
+  overlay.style.display = isOpen ? 'block' : 'none';
+  if (isOpen) { Favourites.renderPanel(); document.body.classList.add('no-scroll'); }
+  else          document.body.classList.remove('no-scroll');
+}
+
+function handleContactForm(e) {
+  e.preventDefault();
+  e.target.innerHTML = '<div style="text-align:center;padding:3rem"><div style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;color:var(--forest);margin-bottom:.5rem">Thank You</div><p>One of our advisors will be in touch within 24 hours.</p></div>';
+}
+
+// Fix mortgage display
+document.addEventListener('DOMContentLoaded', () => {
+  const priceEl = document.getElementById('calc-price-display');
+  const update  = () => {
+    const p = parseFloat(document.getElementById('calc-price')?.value||0);
+    if(priceEl) priceEl.textContent = p.toLocaleString('en-AE', {style:'currency',currency:'AED',maximumFractionDigits:0});
+  };
+  document.getElementById('calc-price')?.addEventListener('input', update);
+  update();
+});
+</script>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
