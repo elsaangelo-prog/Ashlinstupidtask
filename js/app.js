@@ -428,7 +428,7 @@ function toggleFavPanel() {
 /* ─── TESTIMONIALS CAROUSEL ──────────────────────────────────────────────── */
 function initTestimonials() {
   const track = document.getElementById('testimonials-track');
-  if (!track || !window.TESTIMONIALS) return;
+  if (!track || typeof TESTIMONIALS === 'undefined' || !TESTIMONIALS.length) return;
   track.innerHTML = TESTIMONIALS.map(t => `
     <div class="testimonial-card">
       <span class="testimonial-quote-mark">"</span>
@@ -446,7 +446,7 @@ function initTestimonials() {
 /* ─── ADVISORS ───────────────────────────────────────────────────────────── */
 function initAdvisors() {
   const grid = document.getElementById('advisors-grid');
-  if (!grid || !window.TEAM) return;
+  if (!grid || typeof TEAM === 'undefined' || !TEAM.length) return;
   grid.innerHTML = TEAM.map(m => `
     <div class="advisor-card">
       <div class="advisor-photo-wrap">

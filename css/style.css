@@ -444,58 +444,56 @@ p  { line-height:1.7; color:var(--gray-dk); }
 /* ─── FEATURED LISTING CTA ────────────────────────────────────────────────── */
 .view-all-wrap { text-align:center; margin-top:3.5rem; }
 
-/* ─── CEO SECTION ────────────────────────────────────────────────────────── */
-.advisors-section {
-  background:var(--forest);
-  padding:6rem 3rem;
+/* ─── CEO BANNER ─────────────────────────────────────────────────────────── */
+.ceo-banner-section {
+  background:var(--cream);
+  padding:3rem 3rem;
 }
-.advisors-section .section-label { color:var(--champagne); }
-.advisors-section .section-title { color:var(--white); }
-.ceo-inner {
-  display:grid; grid-template-columns:400px 1fr;
-  gap:5rem; max-width:1300px; margin:0 auto;
-  align-items:center;
-}
-.ceo-portrait {
-  width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center;
+.ceo-banner-card {
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; gap:2.5rem;
+  background:var(--white);
   border-radius:var(--radius-lg);
-  border:1px solid rgba(205,177,138,.25);
-  box-shadow:0 30px 80px rgba(0,0,0,.4);
+  border:1px solid var(--border-lt);
+  box-shadow:var(--shadow-sm);
+  padding:2.25rem 2.75rem;
 }
-.ceo-name-block { margin-bottom:1.5rem; }
-.ceo-name-text {
+.ceo-banner-photo {
+  width:148px; height:148px; border-radius:50%;
+  object-fit:cover; object-position:top center;
+  flex-shrink:0;
+  border:3px solid var(--champagne);
+}
+.ceo-banner-info { flex:1; }
+.ceo-banner-name {
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,3vw,3rem); font-weight:400;
-  color:var(--white); display:block; line-height:1.1;
+  font-size:1.85rem; font-weight:400;
+  color:var(--forest); line-height:1.1;
+  margin-bottom:.25rem;
 }
-.ceo-role-text {
-  font-size:.68rem; font-weight:700; letter-spacing:.15em;
-  text-transform:uppercase; color:var(--champagne);
-  display:block; margin-top:.5rem;
+.ceo-banner-role {
+  font-size:.63rem; font-weight:700; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--champagne-dk);
+  display:block; margin-bottom:1rem;
 }
-.ceo-bio {
-  font-size:.9rem; color:rgba(255,255,255,.72);
-  line-height:1.85; margin-bottom:2rem;
+.ceo-banner-quote {
+  font-size:.9rem; color:var(--gray-dk);
+  line-height:1.8; font-style:italic;
+  max-width:58ch; margin-bottom:1.25rem;
 }
-.ceo-story {
-  padding:1.5rem 1.75rem;
-  border-left:2px solid var(--champagne);
-  background:rgba(205,177,138,.05);
-  border-radius:0 var(--radius) var(--radius) 0;
-  margin-bottom:2.5rem;
+.ceo-banner-cta {
+  font-size:.72rem; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--forest);
+  border-bottom:1px solid var(--champagne);
+  padding-bottom:.15rem;
+  transition:color var(--transition);
 }
-.ceo-story-label {
-  font-size:.65rem; font-weight:700; letter-spacing:.15em;
-  text-transform:uppercase; color:var(--champagne);
-  margin-bottom:.85rem;
-}
-.ceo-story p { font-size:.88rem; color:rgba(255,255,255,.65); line-height:1.85; }
-.ceo-story p + p { margin-top:1rem; }
-.ceo-actions { display:flex; gap:1rem; }
+.ceo-banner-cta:hover { color:var(--champagne-dk); }
+.ceo-banner-info .section-label { color:var(--champagne-dk); }
 
-@media (max-width:1024px) {
-  .ceo-inner { grid-template-columns:1fr; gap:3rem; }
-  .ceo-portrait { max-height:420px; aspect-ratio:unset; object-position:top; }
+@media (max-width:768px) {
+  .ceo-banner-card { flex-direction:column; text-align:center; padding:2rem; }
+  .ceo-banner-quote { max-width:unset; }
 }
 
 /* ─── TESTIMONIALS ───────────────────────────────────────────────────────── */
