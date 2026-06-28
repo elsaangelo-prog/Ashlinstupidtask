@@ -72,7 +72,7 @@ p  { line-height:1.7; color:var(--gray-dk); }
 .nav.dark-page   { background:var(--white); box-shadow:var(--shadow-sm); }
 
 .nav-logo {
-  display:flex; flex-direction:column; align-items:flex-start;
+  display:flex; flex-direction:column; align-items:center;
   line-height:1;
 }
 .nav-logo-main {
