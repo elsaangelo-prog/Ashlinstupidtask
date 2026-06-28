@@ -213,7 +213,7 @@ const PROPERTIES = [
     badge: "Exclusive",
     description: "Positioned at the apex of one of DIFC's most prestigious towers, this sky penthouse defines sophisticated urban living with panoramic vistas across the financial district, Downtown, and beyond.",
     features: ["City Panorama", "Private Rooftop", "Smart Home", "Wine Room", "Private Elevator", "Concierge", "Valet"],
-    image: "https://images.unsplash.com/photo-1582407947304-fd86f28320c7?w=900&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900&auto=format&fit=crop&q=80",
     year: 2022,
     garage: 3,
     furnished: true,
@@ -393,7 +393,7 @@ const PROPERTIES = [
     badge: "Exclusive",
     description: "An enchanting forest mansion within Al Barari's legendary botanical sanctuary. This extraordinary estate represents the rarest intersection of opulent living and pristine natural beauty in Dubai.",
     features: ["Forest Setting", "Infinity Pool", "Guest Villa", "Private Stream", "Organic Garden", "Smart Home", "Spa", "Gym"],
-    image: "https://images.unsplash.com/photo-1580041065203-e58ee29bf9a6?w=900&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80",
     year: 2020,
     garage: 6,
     furnished: true,
@@ -453,7 +453,7 @@ const PROPERTIES = [
     badge: "Exclusive",
     description: "The crown jewel of Jumeirah Golf Estates, this exceptional villa commands the finest position on the Earth Course, with uninterrupted views, unprecedented privacy, and museum-quality finishes throughout.",
     features: ["Golf Frontage", "Infinity Pool", "Cinema Room", "8-Car Garage", "Indoor Gym", "Wine Cellar", "Staff Quarters", "Spa"],
-    image: "https://images.unsplash.com/photo-1583608564651-e9e0e6b3a8b4?w=900&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&auto=format&fit=crop&q=80",
     year: 2020,
     garage: 8,
     furnished: false,
@@ -667,5 +667,23 @@ const TESTIMONIALS = [
     name: "Fatima Al-Rashid",
     detail: "Sold Jumeirah Bay Island Villa, AED 58M",
     photo: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=200&auto=format&fit=crop&q=80"
+  },
+  {
+    quote: "From our very first phone call, the service was unlike anything we had experienced before. Every question answered instantly, every concern addressed before we even voiced it. The Angelo Collection didn't just find us a home — they found us exactly the right one.",
+    name: "Daniel & Claire Morrison",
+    detail: "Purchased Dubai Hills Villa, AED 18M",
+    photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80"
+  },
+  {
+    quote: "What sets The Angelo Collection apart isn't just their knowledge of the market — it's the warmth of the people. The team genuinely cared about us as a family, not just as a transaction. We felt supported every single step of the way.",
+    name: "Nadia Al-Farsi",
+    detail: "Purchased Emaar Beachfront Apartment, AED 11M",
+    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80"
+  },
+  {
+    quote: "I've worked with the biggest names in real estate across three continents. The Angelo Collection is, without question, the finest agency I have ever engaged with. The professionalism, the results, and the sheer quality of the experience are in a class of their own.",
+    name: "Jonathan Hartley",
+    detail: "Investment Portfolio, AED 75M",
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
   }
 ];
