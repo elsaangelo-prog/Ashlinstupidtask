@@ -343,7 +343,18 @@
     <h2 class="section-title">Voices of trust</h2>
     <p class="section-sub">The experiences of our clients speak with greater eloquence than any advertisement.</p>
   </div>
-  <div class="testimonials-track" id="testimonials-track"></div>
+  <div class="testimonials-carousel-outer">
+    <button class="testi-nav-btn" id="testi-prev" onclick="testiNav(-1)" disabled aria-label="Previous testimonials">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="testimonials-viewport" id="testi-viewport">
+      <div class="testimonials-track" id="testimonials-track"></div>
+    </div>
+    <button class="testi-nav-btn" id="testi-next" onclick="testiNav(1)" aria-label="Next testimonials">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+  <div class="testi-dots" id="testi-dots"></div>
 </section>
 
 <!-- ─── MEET OUR CEO ─────────────────────────────────────────────────────── -->

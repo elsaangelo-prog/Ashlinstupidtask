@@ -393,7 +393,7 @@ const PROPERTIES = [
     badge: "Exclusive",
     description: "An enchanting forest mansion within Al Barari's legendary botanical sanctuary. This extraordinary estate represents the rarest intersection of opulent living and pristine natural beauty in Dubai.",
     features: ["Forest Setting", "Infinity Pool", "Guest Villa", "Private Stream", "Organic Garden", "Smart Home", "Spa", "Gym"],
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&auto=format&fit=crop&q=80",
     year: 2020,
     garage: 6,
     furnished: true,

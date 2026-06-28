@@ -426,9 +426,12 @@ function toggleFavPanel() {
 }
 
 /* ─── TESTIMONIALS CAROUSEL ──────────────────────────────────────────────── */
+let testiIdx = 0;
+
 function initTestimonials() {
   const track = document.getElementById('testimonials-track');
   if (!track || typeof TESTIMONIALS === 'undefined' || !TESTIMONIALS.length) return;
+
   track.innerHTML = TESTIMONIALS.map(t => `
     <div class="testimonial-card">
       <span class="testimonial-quote-mark">"</span>
@@ -441,6 +444,66 @@ function initTestimonials() {
         </div>
       </div>
     </div>`).join('');
+
+  const pageCount = Math.ceil(TESTIMONIALS.length / 3);
+  const dots = document.getElementById('testi-dots');
+  if (dots) {
+    dots.innerHTML = Array.from({length: pageCount}, (_, i) =>
+      `<button class="testi-dot${i===0?' active':''}" onclick="testiGoTo(${i*3})" aria-label="Page ${i+1}"></button>`
+    ).join('');
+  }
+
+  testiSetCardWidths();
+  updateTestiNav();
+  window.addEventListener('resize', () => { testiSetCardWidths(); updateTestiNav(); }, { passive:true });
+}
+
+function testiSetCardWidths() {
+  const viewport = document.getElementById('testi-viewport');
+  const track    = document.getElementById('testimonials-track');
+  if (!viewport || !track) return;
+  const isMobile = window.innerWidth <= 768;
+  const visible  = isMobile ? 1 : 3;
+  const gap      = isMobile ? 16 : 32;
+  const w        = viewport.offsetWidth;
+  const cardW    = Math.floor((w - (visible - 1) * gap) / visible);
+  track.querySelectorAll('.testimonial-card').forEach(c => { c.style.width = cardW + 'px'; });
+}
+
+function testiNav(dir) {
+  const visible = window.innerWidth <= 768 ? 1 : 3;
+  testiGoTo(testiIdx + dir * visible);
+}
+
+function testiGoTo(idx) {
+  const visible = window.innerWidth <= 768 ? 1 : 3;
+  const total   = typeof TESTIMONIALS !== 'undefined' ? TESTIMONIALS.length : 0;
+  testiIdx = Math.max(0, Math.min(idx, total - visible));
+  updateTestiNav();
+}
+
+function updateTestiNav() {
+  const track = document.getElementById('testimonials-track');
+  if (!track) return;
+  const cards   = track.querySelectorAll('.testimonial-card');
+  if (!cards.length) return;
+  const isMobile = window.innerWidth <= 768;
+  const visible  = isMobile ? 1 : 3;
+  const gap      = isMobile ? 16 : 32;
+  const cardW    = cards[0].offsetWidth;
+  const total    = typeof TESTIMONIALS !== 'undefined' ? TESTIMONIALS.length : 0;
+
+  track.style.transform = `translateX(-${testiIdx * (cardW + gap)}px)`;
+
+  const prev = document.getElementById('testi-prev');
+  const next = document.getElementById('testi-next');
+  if (prev) prev.disabled = testiIdx <= 0;
+  if (next) next.disabled = testiIdx >= total - visible;
+
+  const pageIdx = Math.round(testiIdx / 3);
+  document.querySelectorAll('.testi-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === pageIdx);
+  });
 }
 
 /* ─── ADVISORS ───────────────────────────────────────────────────────────── */

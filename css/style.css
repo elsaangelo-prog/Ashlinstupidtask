@@ -446,50 +446,50 @@ p  { line-height:1.7; color:var(--gray-dk); }
 
 /* ─── CEO BANNER ─────────────────────────────────────────────────────────── */
 .ceo-banner-section {
-  background:var(--cream);
-  padding:3rem 3rem;
+  background:var(--forest);
+  padding:4rem 3rem;
 }
 .ceo-banner-card {
   max-width:1100px; margin:0 auto;
   display:flex; align-items:center; gap:2.5rem;
-  background:var(--white);
+  background:rgba(255,255,255,.06);
   border-radius:var(--radius-lg);
-  border:1px solid var(--border-lt);
-  box-shadow:var(--shadow-sm);
-  padding:2.25rem 2.75rem;
+  border:1px solid rgba(205,177,138,.2);
+  padding:2.5rem 3rem;
 }
 .ceo-banner-photo {
   width:148px; height:148px; border-radius:50%;
   object-fit:cover; object-position:top center;
   flex-shrink:0;
   border:3px solid var(--champagne);
+  box-shadow:0 0 0 6px rgba(205,177,138,.12);
 }
 .ceo-banner-info { flex:1; }
 .ceo-banner-name {
   font-family:'Cormorant Garamond',serif;
-  font-size:1.85rem; font-weight:400;
-  color:var(--forest); line-height:1.1;
-  margin-bottom:.25rem;
+  font-size:2rem; font-weight:400;
+  color:var(--white); line-height:1.1;
+  margin-bottom:.3rem;
 }
 .ceo-banner-role {
   font-size:.63rem; font-weight:700; letter-spacing:.15em;
-  text-transform:uppercase; color:var(--champagne-dk);
+  text-transform:uppercase; color:var(--champagne);
   display:block; margin-bottom:1rem;
 }
 .ceo-banner-quote {
-  font-size:.9rem; color:var(--gray-dk);
-  line-height:1.8; font-style:italic;
-  max-width:58ch; margin-bottom:1.25rem;
+  font-size:.92rem; color:rgba(255,255,255,.72);
+  line-height:1.85; font-style:italic;
+  max-width:58ch; margin-bottom:1.4rem;
 }
 .ceo-banner-cta {
   font-size:.72rem; font-weight:600; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--forest);
-  border-bottom:1px solid var(--champagne);
+  text-transform:uppercase; color:var(--champagne);
+  border-bottom:1px solid rgba(205,177,138,.4);
   padding-bottom:.15rem;
   transition:color var(--transition);
 }
-.ceo-banner-cta:hover { color:var(--champagne-dk); }
-.ceo-banner-info .section-label { color:var(--champagne-dk); }
+.ceo-banner-cta:hover { color:var(--champagne-lt); border-bottom-color:var(--champagne-lt); }
+.ceo-banner-info .section-label { color:var(--champagne); }
 
 @media (max-width:768px) {
   .ceo-banner-card { flex-direction:column; text-align:center; padding:2rem; }
@@ -498,13 +498,41 @@ p  { line-height:1.7; color:var(--gray-dk); }
 
 /* ─── TESTIMONIALS ───────────────────────────────────────────────────────── */
 .testimonials-section { background:var(--cream); padding:6rem 3rem; }
-.testimonials-track {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-  gap:2rem;
+.testimonials-carousel-outer {
+  position:relative;
+  display:flex; align-items:center; gap:1.5rem;
   max-width:1300px; margin:0 auto;
 }
+.testimonials-viewport { overflow:hidden; flex:1; }
+.testimonials-track {
+  display:flex; gap:2rem;
+  transition:transform .55s cubic-bezier(.25,.46,.45,.94);
+  will-change:transform;
+}
+.testi-nav-btn {
+  flex-shrink:0;
+  width:48px; height:48px; border-radius:50%;
+  border:1.5px solid var(--border);
+  background:var(--white); color:var(--forest);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .2s;
+}
+.testi-nav-btn:hover:not(:disabled) { background:var(--forest); color:var(--white); border-color:var(--forest); }
+.testi-nav-btn:disabled { opacity:.3; cursor:not-allowed; }
+.testi-nav-btn svg { width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; }
+.testi-dots {
+  display:flex; justify-content:center; gap:.6rem;
+  margin-top:2rem;
+}
+.testi-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--champagne-lt); border:none;
+  cursor:pointer; transition:background .2s, transform .2s;
+  padding:0;
+}
+.testi-dot.active { background:var(--champagne-dk); transform:scale(1.3); }
 .testimonial-card {
+  flex-shrink:0;
   background:var(--white);
   border-radius:var(--radius-lg);
   padding:2.5rem;
@@ -1090,7 +1118,8 @@ p  { line-height:1.7; color:var(--gray-dk); }
   .compare-bar-slots { display:none; }
   .mortgage-fees { display:none; }
   .why-grid { grid-template-columns:1fr 1fr; }
-  .testimonials-track { grid-template-columns:1fr; }
+  .testimonials-carousel-outer { gap:.75rem; }
+  .testi-nav-btn { width:36px; height:36px; }
   .listings-page-hero-inner { flex-direction:column; align-items:flex-start; gap:1rem; }
 }
 
