@@ -1160,21 +1160,23 @@ p  { line-height:1.7; color:var(--gray-dk); }
 /* ─── WHATSAPP BUTTON ────────────────────────────────────────────────────── */
 .whatsapp-btn {
   position:fixed; bottom:2rem; right:2rem; z-index:990;
-  display:flex; align-items:center; gap:.65rem;
-  background:#25D366; color:#fff;
-  padding:.75rem 1.35rem .75rem 1rem;
+  display:flex; align-items:center; gap:.45rem;
+  background:var(--forest-dark); color:var(--champagne);
+  padding:.55rem .9rem .55rem .7rem;
   border-radius:50px;
-  box-shadow:0 4px 24px rgba(37,211,102,.4);
-  font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-  transition:transform .2s, box-shadow .2s;
+  border:1px solid rgba(205,177,138,.28);
+  box-shadow:0 4px 18px rgba(16,24,20,.45);
+  font-size:.6rem; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  transition:transform .2s, box-shadow .2s, border-color .2s;
   white-space:nowrap;
 }
 .whatsapp-btn:hover {
-  transform:translateY(-3px) scale(1.03);
-  box-shadow:0 8px 32px rgba(37,211,102,.55);
-  color:#fff;
+  transform:translateY(-2px);
+  box-shadow:0 8px 26px rgba(16,24,20,.6);
+  border-color:rgba(205,177,138,.55);
+  color:var(--champagne);
 }
-.whatsapp-btn svg { width:22px; height:22px; flex-shrink:0; }
+.whatsapp-btn svg { width:17px; height:17px; flex-shrink:0; }
 
 /* ─── UTILITIES ──────────────────────────────────────────────────────────── */
 .container { max-width:1300px; margin:0 auto; }
