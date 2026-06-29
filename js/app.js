@@ -601,7 +601,9 @@ function initHomeFeatured() {
   const row1 = document.getElementById('featured-row-1');
   if (!row1) return;
   const exclusive = PROPERTIES.filter(p => p.badge === 'Exclusive');
-  row1.innerHTML = exclusive.slice(0, 5).map(p => renderCard(p)).join('');
+  row1.innerHTML = exclusive.slice(0, 5).map(p =>
+    renderCard(p).replace('>Exclusive<', '>Featured<')
+  ).join('');
   const row2 = document.getElementById('featured-row-2');
   if (row2) {
     row2.innerHTML = exclusive.slice(5, 9).map(p =>

@@ -371,12 +371,12 @@ p  { line-height:1.7; color:var(--gray-dk); }
   max-width:1300px; margin:2.5rem auto 1.5rem;
   display:flex; align-items:center; gap:1.5rem;
 }
-.featured-row-divider::before, .featured-row-divider::after {
+.featured-row-divider::after {
   content:''; flex:1; height:1px; background:var(--champagne-lt);
 }
 .featured-row-label {
-  font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
-  color:var(--champagne-dk); white-space:nowrap;
+  font-size:1.15rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--forest); white-space:nowrap;
 }
 
 /* ── Off-market overlay ──────────────────────────────────────────────── */
