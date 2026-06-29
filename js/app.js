@@ -29,63 +29,96 @@ const Currency = {
       dd.className = 'currency-global-dropdown';
       dd.style.display = 'none';
       document.body.appendChild(dd);
-      document.addEventListener('click', () => { dd.style.display = 'none'; dd._trigger = null; });
+      dd.addEventListener('click', e => e.stopPropagation());
+      document.addEventListener('click', () => { dd.style.display = 'none'; dd._trigger = null; dd._card = null; });
     }
-    this._renderDropdown();
+    this._renderDropdown(null);
     this.updateDOM();
   },
-  _renderDropdown() {
+  _fmt(aed, currency, full) {
+    const v = aed * this.rates[currency];
+    const s = this.symbols[currency];
+    if (full) return s + Math.round(v).toLocaleString();
+    if (v >= 1e6) return s + (v / 1e6).toFixed(v % 1e6 < 50000 ? 0 : 1) + 'M';
+    if (v >= 1e3) return s + Math.round(v / 1e3) + 'K';
+    return s + Math.round(v).toLocaleString();
+  },
+  _renderDropdown(card) {
     const dd = document.getElementById('currency-global-dropdown');
     if (!dd) return;
+    const active = card ? (card.dataset.cardCurrency || this.current) : this.current;
     dd.innerHTML = ['AED','USD','EUR','GBP','CNY'].map(code => {
-      const sym = this.ddSyms[code], active = code === this.current;
-      return `<button class="cdd-option${active ? ' active' : ''}" onclick="Currency.set('${code}');event.stopPropagation()">
+      const sym = this.ddSyms[code], on = code === active;
+      return `<button class="cdd-option${on ? ' active' : ''}" onclick="Currency._pick('${code}')">
         <span class="cdd-flag">${this.flags[code]}</span>
         <span class="cdd-code">${code}${sym ? ` <span class="cdd-sym">${sym}</span>` : ''}</span>
         <span class="cdd-name">${this.names[code]}</span>
-        ${active ? '<svg class="cdd-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+        ${on ? '<svg class="cdd-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
       </button>`;
     }).join('');
+  },
+  _pick(currency) {
+    const dd = document.getElementById('currency-global-dropdown');
+    const card = dd?._card;
+    if (card) {
+      card.dataset.cardCurrency = currency;
+      card.querySelectorAll('[data-aed]').forEach(el => {
+        const aed = parseFloat(el.dataset.aed);
+        if (!isNaN(aed)) el.textContent = this._fmt(aed, currency, el.dataset.fmt === 'full');
+      });
+      card.querySelectorAll('.curr-flag-indicator').forEach(el => el.textContent = this.flags[currency]);
+      if (dd) { dd.style.display = 'none'; dd._trigger = null; dd._card = null; }
+    } else {
+      this.set(currency);
+    }
   },
   toggleDropdown(e, trigger) {
     e.stopPropagation();
     const dd = document.getElementById('currency-global-dropdown');
     if (!dd) return;
+    const card = trigger.closest('.property-card') || trigger.closest('.rv-banner-card') || null;
     const isOpen = dd._trigger === trigger && dd.style.display !== 'none';
-    dd.style.display = 'none'; dd._trigger = null;
+    dd.style.display = 'none'; dd._trigger = null; dd._card = null;
     if (isOpen) return;
+    dd._card = card;
+    dd._trigger = trigger;
+    this._renderDropdown(card);
     const rect = trigger.getBoundingClientRect();
     dd.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 224)) + 'px';
     dd.style.top  = (rect.bottom + 6) + 'px';
-    dd._trigger = trigger;
     dd.style.display = 'block';
   },
-  format(n) {
-    const v = n * this.rates[this.current];
-    const s = this.symbols[this.current];
-    if (v >= 1e6) return s + (v / 1e6).toFixed(v % 1e6 < 50000 ? 0 : 1) + 'M';
-    if (v >= 1e3) return s + Math.round(v / 1e3) + 'K';
-    return s + Math.round(v).toLocaleString();
-  },
-  formatFull(n) {
-    const v = n * this.rates[this.current];
-    return this.symbols[this.current] + Math.round(v).toLocaleString();
-  },
+  format(n) { return this._fmt(n, this.current, false); },
+  formatFull(n) { return this._fmt(n, this.current, true); },
   set(currency) {
     if (!this.rates[currency]) return;
     this.current = currency;
     try { localStorage.setItem('angelo_currency', currency); } catch {}
+    document.querySelectorAll('.property-card[data-card-currency], .rv-banner-card[data-card-currency]')
+      .forEach(card => { card.dataset.cardCurrency = currency; });
     this.updateDOM();
-    this._renderDropdown();
+    this._renderDropdown(null);
     const dd = document.getElementById('currency-global-dropdown');
-    if (dd) { dd.style.display = 'none'; dd._trigger = null; }
+    if (dd) { dd.style.display = 'none'; dd._trigger = null; dd._card = null; }
   },
   updateDOM() {
-    document.querySelectorAll('[data-aed]').forEach(el => {
-      const aed = parseFloat(el.dataset.aed);
-      if (!isNaN(aed)) el.textContent = el.dataset.fmt === 'full' ? this.formatFull(aed) : this.format(aed);
+    document.querySelectorAll('.property-card, .rv-banner-card').forEach(card => {
+      const cur = card.dataset.cardCurrency || this.current;
+      card.querySelectorAll('[data-aed]').forEach(el => {
+        const aed = parseFloat(el.dataset.aed);
+        if (!isNaN(aed)) el.textContent = this._fmt(aed, cur, el.dataset.fmt === 'full');
+      });
+      card.querySelectorAll('.curr-flag-indicator').forEach(el => el.textContent = this.flags[cur]);
     });
-    document.querySelectorAll('.curr-flag-indicator').forEach(el => el.textContent = this.flags[this.current]);
+    document.querySelectorAll('[data-aed]').forEach(el => {
+      if (el.closest('.property-card') || el.closest('.rv-banner-card')) return;
+      const aed = parseFloat(el.dataset.aed);
+      if (!isNaN(aed)) el.textContent = this._fmt(aed, this.current, el.dataset.fmt === 'full');
+    });
+    document.querySelectorAll('.curr-flag-indicator').forEach(el => {
+      if (el.closest('.property-card') || el.closest('.rv-banner-card')) return;
+      el.textContent = this.flags[this.current];
+    });
     document.querySelectorAll('.curr-code-indicator').forEach(el => el.textContent = this.current);
   }
 };
@@ -448,7 +481,7 @@ function renderCard(p) {
   const isCmp  = Compare.has(p.id);
   const badge  = p.badge ? `<div class="card-badge badge-${p.badge.toLowerCase()}">${p.badge}</div>` : '';
   return `
-  <div class="property-card" id="prop-${p.id}">
+  <div class="property-card" id="prop-${p.id}" data-card-currency="${Currency.current}">
     <div class="card-image-wrap">
       <img src="${p.image}" alt="${p.title}" loading="lazy">
       ${badge}
