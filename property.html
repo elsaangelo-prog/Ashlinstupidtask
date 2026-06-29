@@ -29,11 +29,6 @@
     <li><a href="index.html#contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
-    <div class="currency-switcher">
-      <button class="currency-btn" data-currency="AED" onclick="Currency.set('AED')">AED</button>
-      <button class="currency-btn" data-currency="GBP" onclick="Currency.set('GBP')">GBP</button>
-      <button class="currency-btn" data-currency="USD" onclick="Currency.set('USD')">USD</button>
-    </div>
     <button class="nav-icon-btn" onclick="toggleFavPanel()" aria-label="Saved properties">
       <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       Saved
@@ -68,7 +63,13 @@
       All Properties
     </a>
     <div id="prop-hero-badge"></div>
-    <div class="prop-hero-price" id="prop-hero-price"></div>
+    <div style="display:flex;align-items:center;gap:.6rem">
+      <div class="prop-hero-price" id="prop-hero-price"></div>
+      <button class="card-curr-trigger prop-curr-trigger" onclick="Currency.toggleDropdown(event, this)" aria-label="Change currency">
+        <span class="curr-flag-indicator">🇦🇪</span>
+        <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" style="width:8px;height:8px;flex-shrink:0"><path d="M1 1l4 4 4-4"/></svg>
+      </button>
+    </div>
     <h1 class="prop-hero-title" id="prop-hero-title">Loading...</h1>
     <div class="prop-hero-location" id="prop-hero-location"></div>
   </div>
@@ -192,6 +193,11 @@
   </div>
   <div class="footer-bottom">
     <span>© 2025 The Angelo Collection. All rights reserved.</span>
+    <button class="footer-curr-btn" onclick="Currency.toggleDropdown(event, this)" aria-label="Change display currency">
+      <span class="curr-flag-indicator">🇦🇪</span>
+      <span class="curr-code-indicator">AED</span>
+      <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" style="width:8px;height:8px;opacity:.5"><path d="M1 1l4 4 4-4"/></svg>
+    </button>
     <div style="display:flex;gap:1.5rem">
       <a href="#">Privacy Policy</a>
       <a href="#">Terms</a>

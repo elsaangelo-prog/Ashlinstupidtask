@@ -1,23 +1,64 @@
 /* ─── CURRENCY MODULE ─────────────────────────────────────────────────────── */
 const Currency = {
   current: (() => { try { return localStorage.getItem('angelo_currency') || 'AED'; } catch { return 'AED'; } })(),
-  rates:   { AED: 1, GBP: 0.22, USD: 0.27 },
-  symbols: { AED: 'AED ', GBP: '£', USD: '$' },
+  rates:   { AED: 1, GBP: 0.22, USD: 0.27, EUR: 0.25, CNY: 1.96 },
+  symbols: { AED: 'AED ', GBP: '£', USD: '$', EUR: '€', CNY: '¥' },
+  flags:   { AED: '🇦🇪', USD: '🇺🇸', EUR: '🇪🇺', GBP: '🇬🇧', CNY: '🇨🇳' },
+  names:   { AED: 'UAE Dirham', USD: 'US Dollar', EUR: 'Euro', GBP: 'British Pound', CNY: 'Chinese Yuan' },
+  ddSyms:  { AED: '', USD: '$', EUR: '€', GBP: '£', CNY: '¥' },
   async init() {
     const cached = sessionStorage.getItem('angelo_fx');
     if (cached) {
-      try { const r = JSON.parse(cached); if (r.GBP) this.rates = { AED: 1, GBP: r.GBP, USD: r.USD }; } catch {}
+      try {
+        const r = JSON.parse(cached);
+        if (r.GBP) this.rates = { AED: 1, GBP: r.GBP, USD: r.USD, EUR: r.EUR || 0.25, CNY: r.CNY || 1.96 };
+      } catch {}
     } else {
       try {
         const res  = await fetch('https://open.er-api.com/v6/latest/AED');
         const data = await res.json();
         if (data.rates?.GBP) {
-          this.rates = { AED: 1, GBP: data.rates.GBP, USD: data.rates.USD };
+          this.rates = { AED: 1, GBP: data.rates.GBP, USD: data.rates.USD, EUR: data.rates.EUR, CNY: data.rates.CNY };
           sessionStorage.setItem('angelo_fx', JSON.stringify(this.rates));
         }
       } catch {}
     }
+    if (!document.getElementById('currency-global-dropdown')) {
+      const dd = document.createElement('div');
+      dd.id = 'currency-global-dropdown';
+      dd.className = 'currency-global-dropdown';
+      dd.style.display = 'none';
+      document.body.appendChild(dd);
+      document.addEventListener('click', () => { dd.style.display = 'none'; dd._trigger = null; });
+    }
+    this._renderDropdown();
     this.updateDOM();
+  },
+  _renderDropdown() {
+    const dd = document.getElementById('currency-global-dropdown');
+    if (!dd) return;
+    dd.innerHTML = ['AED','USD','EUR','GBP','CNY'].map(code => {
+      const sym = this.ddSyms[code], active = code === this.current;
+      return `<button class="cdd-option${active ? ' active' : ''}" onclick="Currency.set('${code}');event.stopPropagation()">
+        <span class="cdd-flag">${this.flags[code]}</span>
+        <span class="cdd-code">${code}${sym ? ` <span class="cdd-sym">${sym}</span>` : ''}</span>
+        <span class="cdd-name">${this.names[code]}</span>
+        ${active ? '<svg class="cdd-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+      </button>`;
+    }).join('');
+  },
+  toggleDropdown(e, trigger) {
+    e.stopPropagation();
+    const dd = document.getElementById('currency-global-dropdown');
+    if (!dd) return;
+    const isOpen = dd._trigger === trigger && dd.style.display !== 'none';
+    dd.style.display = 'none'; dd._trigger = null;
+    if (isOpen) return;
+    const rect = trigger.getBoundingClientRect();
+    dd.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 224)) + 'px';
+    dd.style.top  = (rect.bottom + 6) + 'px';
+    dd._trigger = trigger;
+    dd.style.display = 'block';
   },
   format(n) {
     const v = n * this.rates[this.current];
@@ -35,16 +76,17 @@ const Currency = {
     this.current = currency;
     try { localStorage.setItem('angelo_currency', currency); } catch {}
     this.updateDOM();
-    document.querySelectorAll('.currency-btn').forEach(btn =>
-      btn.classList.toggle('active', btn.dataset.currency === currency));
+    this._renderDropdown();
+    const dd = document.getElementById('currency-global-dropdown');
+    if (dd) { dd.style.display = 'none'; dd._trigger = null; }
   },
   updateDOM() {
     document.querySelectorAll('[data-aed]').forEach(el => {
       const aed = parseFloat(el.dataset.aed);
       if (!isNaN(aed)) el.textContent = el.dataset.fmt === 'full' ? this.formatFull(aed) : this.format(aed);
     });
-    document.querySelectorAll('.currency-btn').forEach(btn =>
-      btn.classList.toggle('active', btn.dataset.currency === this.current));
+    document.querySelectorAll('.curr-flag-indicator').forEach(el => el.textContent = this.flags[this.current]);
+    document.querySelectorAll('.curr-code-indicator').forEach(el => el.textContent = this.current);
   }
 };
 
@@ -438,7 +480,13 @@ function renderCard(p) {
     </div>
     <div class="card-body">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
-        <div class="card-price" data-aed="${p.price}">${fmt(p.price)}</div>
+        <div class="card-price-row">
+          <div class="card-price" data-aed="${p.price}">${fmt(p.price)}</div>
+          <button class="card-curr-trigger" onclick="Currency.toggleDropdown(event, this)" aria-label="Change currency">
+            <span class="curr-flag-indicator">${Currency.flags[Currency.current]}</span>
+            <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" style="width:8px;height:8px;flex-shrink:0"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+        </div>
         <span class="card-type-tag">${p.type}</span>
       </div>
       <div class="card-title">${p.title}</div>
