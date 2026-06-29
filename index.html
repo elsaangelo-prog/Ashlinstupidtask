@@ -5,7 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Angelo Collection — Luxury Real Estate Dubai</title>
 <meta name="description" content="Dubai's most exceptional luxury properties. Penthouses, villas and estates across Palm Jumeirah, Downtown, Emirates Hills and beyond.">
-<link rel="stylesheet" href="css/style.css?v=3">
+<meta property="og:title" content="The Angelo Collection — Luxury Real Estate Dubai">
+<meta property="og:description" content="Dubai's most coveted addresses. Extraordinary penthouses, villas and estates curated by The Angelo Collection.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&auto=format&fit=crop&q=80">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Angelo Collection">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Angelo Collection — Luxury Real Estate Dubai">
+<meta name="twitter:description" content="Dubai's most coveted addresses. Extraordinary properties curated exclusively.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&auto=format&fit=crop&q=80">
+<link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
@@ -23,6 +32,11 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
+    <div class="currency-switcher">
+      <button class="currency-btn" data-currency="AED" onclick="Currency.set('AED')">AED</button>
+      <button class="currency-btn" data-currency="GBP" onclick="Currency.set('GBP')">GBP</button>
+      <button class="currency-btn" data-currency="USD" onclick="Currency.set('USD')">USD</button>
+    </div>
     <button class="nav-icon-btn" onclick="toggleFavPanel()" aria-label="Saved properties">
       <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       Saved

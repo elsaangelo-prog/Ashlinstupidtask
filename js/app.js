@@ -1,8 +1,56 @@
+/* ─── CURRENCY MODULE ─────────────────────────────────────────────────────── */
+const Currency = {
+  current: (() => { try { return localStorage.getItem('angelo_currency') || 'AED'; } catch { return 'AED'; } })(),
+  rates:   { AED: 1, GBP: 0.22, USD: 0.27 },
+  symbols: { AED: 'AED ', GBP: '£', USD: '$' },
+  async init() {
+    const cached = sessionStorage.getItem('angelo_fx');
+    if (cached) {
+      try { const r = JSON.parse(cached); if (r.GBP) this.rates = { AED: 1, GBP: r.GBP, USD: r.USD }; } catch {}
+    } else {
+      try {
+        const res  = await fetch('https://open.er-api.com/v6/latest/AED');
+        const data = await res.json();
+        if (data.rates?.GBP) {
+          this.rates = { AED: 1, GBP: data.rates.GBP, USD: data.rates.USD };
+          sessionStorage.setItem('angelo_fx', JSON.stringify(this.rates));
+        }
+      } catch {}
+    }
+    this.updateDOM();
+  },
+  format(n) {
+    const v = n * this.rates[this.current];
+    const s = this.symbols[this.current];
+    if (v >= 1e6) return s + (v / 1e6).toFixed(v % 1e6 < 50000 ? 0 : 1) + 'M';
+    if (v >= 1e3) return s + Math.round(v / 1e3) + 'K';
+    return s + Math.round(v).toLocaleString();
+  },
+  formatFull(n) {
+    const v = n * this.rates[this.current];
+    return this.symbols[this.current] + Math.round(v).toLocaleString();
+  },
+  set(currency) {
+    if (!this.rates[currency]) return;
+    this.current = currency;
+    try { localStorage.setItem('angelo_currency', currency); } catch {}
+    this.updateDOM();
+    document.querySelectorAll('.currency-btn').forEach(btn =>
+      btn.classList.toggle('active', btn.dataset.currency === currency));
+  },
+  updateDOM() {
+    document.querySelectorAll('[data-aed]').forEach(el => {
+      const aed = parseFloat(el.dataset.aed);
+      if (!isNaN(aed)) el.textContent = el.dataset.fmt === 'full' ? this.formatFull(aed) : this.format(aed);
+    });
+    document.querySelectorAll('.currency-btn').forEach(btn =>
+      btn.classList.toggle('active', btn.dataset.currency === this.current));
+  }
+};
+
 /* ─── UTILS ──────────────────────────────────────────────────────────────── */
-const fmt = n => 'AED ' + (n >= 1000000
-  ? (n / 1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M'
-  : (n / 1000).toFixed(0) + 'K');
-const fmtFull = n => 'AED ' + n.toLocaleString();
+const fmt     = n => Currency.format(n);
+const fmtFull = n => Currency.formatFull(n);
 const fmtAED  = n => n.toLocaleString('en-AE', { style:'currency', currency:'AED', maximumFractionDigits:0 });
 
 /* ─── FAVOURITES ─────────────────────────────────────────────────────────── */
@@ -172,6 +220,127 @@ const Compare = {
   }
 };
 
+/* ─── RECENTLY VIEWED ────────────────────────────────────────────────────── */
+const RecentlyViewed = {
+  key: 'angelo_recent',
+  max: 6,
+  get()     { try { return JSON.parse(localStorage.getItem(this.key)) || []; } catch { return []; } },
+  track(id) {
+    let list = this.get().filter(x => x !== id);
+    list.unshift(id);
+    if (list.length > this.max) list.length = this.max;
+    try { localStorage.setItem(this.key, JSON.stringify(list)); } catch {}
+  },
+  render() {
+    const el = document.getElementById('recently-viewed-list');
+    if (!el) return;
+    const ids   = this.get();
+    const props = ids.map(id => PROPERTIES.find(p => p.id === id)).filter(Boolean);
+    const sec   = document.getElementById('recently-viewed-section');
+    if (!props.length) { if (sec) sec.style.display = 'none'; return; }
+    if (sec) sec.style.display = 'block';
+    el.innerHTML = props.map(p => `
+      <a href="property.html?id=${p.id}" class="rv-item">
+        <img class="rv-item-img" src="${p.image}" alt="${p.title}" loading="lazy">
+        <div class="rv-item-body">
+          <div class="rv-item-title">${p.title}</div>
+          <div class="rv-item-price" data-aed="${p.price}">${fmt(p.price)}</div>
+        </div>
+      </a>`).join('');
+  }
+};
+
+/* ─── SAVED SEARCHES ─────────────────────────────────────────────────────── */
+const SavedSearches = {
+  key: 'angelo_saved',
+  get() { try { return JSON.parse(localStorage.getItem(this.key)) || []; } catch { return []; } },
+  save() {
+    const name = prompt('Name this search (e.g. "Palm Villas 5+ bed"):');
+    if (!name?.trim()) return;
+    const saved = this.get();
+    saved.unshift({ name: name.trim(), state: { ...Filter.state, page: 1 }, ts: Date.now() });
+    if (saved.length > 8) saved.splice(8);
+    try { localStorage.setItem(this.key, JSON.stringify(saved)); } catch {}
+    this.render();
+  },
+  restore(i) {
+    const s = this.get()[i];
+    if (!s) return;
+    Filter.state = { ...Filter.state, ...s.state, page: 1 };
+    const setEl = (id, val) => { const e = document.getElementById(id); if (e) e.value = val || ''; };
+    setEl('filter-area', s.state.area);
+    setEl('filter-type', s.state.type);
+    setEl('sort-select', s.state.sort || 'featured');
+    setEl('filter-search', s.state.search);
+    setEl('filter-min-sqft', s.state.minSqft);
+    setEl('filter-furnished', s.state.furnished);
+    Filter.renderResults();
+  },
+  del(i) {
+    const saved = this.get(); saved.splice(i, 1);
+    try { localStorage.setItem(this.key, JSON.stringify(saved)); } catch {}
+    this.render();
+  },
+  render() {
+    const el  = document.getElementById('saved-searches-list');
+    if (!el) return;
+    const saved = this.get();
+    const sec   = document.getElementById('saved-searches-section');
+    if (sec) sec.style.display = saved.length ? 'block' : 'none';
+    el.innerHTML = saved.map((s, i) => `
+      <div class="saved-search-item">
+        <button class="saved-search-name" onclick="SavedSearches.restore(${i})">${s.name}</button>
+        <button class="saved-search-del" onclick="SavedSearches.del(${i})" aria-label="Delete">✕</button>
+      </div>`).join('');
+  }
+};
+
+/* ─── LISTINGS MAP ───────────────────────────────────────────────────────── */
+const ListingsMap = {
+  map: null, markers: [], active: false,
+  toggle(show) {
+    this.active = show;
+    const cont     = document.getElementById('listings-map-container');
+    const grid     = document.getElementById('listings-grid');
+    const loadMore = document.getElementById('load-more-wrap');
+    if (cont)     cont.style.display = show ? 'block' : 'none';
+    if (grid)     grid.style.display = show ? 'none' : '';
+    if (loadMore) loadMore.style.display = show ? 'none' : '';
+    if (show) { this.init(); this.update(Filter.apply()); setTimeout(() => this.map?.invalidateSize(), 200); }
+  },
+  init() {
+    if (this.map || typeof L === 'undefined') return;
+    const el = document.getElementById('listings-map');
+    if (!el) return;
+    this.map = L.map('listings-map').setView([25.1180, 55.2100], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxZoom: 19
+    }).addTo(this.map);
+  },
+  update(props) {
+    if (!this.map) return;
+    this.markers.forEach(m => this.map.removeLayer(m));
+    this.markers = [];
+    props.forEach(p => {
+      const coords = typeof PROPERTY_COORDS !== 'undefined' && PROPERTY_COORDS[p.id];
+      if (!coords) return;
+      const icon = L.divIcon({ html: `<div class="map-pin">${fmt(p.price)}</div>`, className: '', iconSize: null });
+      const m = L.marker(coords, { icon }).addTo(this.map);
+      m.bindPopup(`<div style="min-width:190px;font-family:sans-serif">
+        <img src="${p.image}" style="width:100%;height:90px;object-fit:cover;border-radius:4px;margin-bottom:6px" loading="lazy">
+        <div style="font-weight:600;font-size:.82rem;margin-bottom:2px">${p.title}</div>
+        <div style="color:#666;font-size:.72rem;margin-bottom:5px">${p.location}</div>
+        <div style="font-weight:700;font-size:.85rem;margin-bottom:7px;color:#243B2F">${fmt(p.price)}</div>
+        <a href="property.html?id=${p.id}" style="display:block;text-align:center;background:#243B2F;color:#CDB18A;padding:5px 10px;border-radius:3px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase">View Property</a>
+      </div>`);
+      this.markers.push(m);
+    });
+    if (this.markers.length) {
+      try { this.map.fitBounds(L.featureGroup(this.markers).getBounds().pad(0.15)); } catch {}
+    }
+  }
+};
+
 /* ─── MORTGAGE CALCULATOR ─────────────────────────────────────────────────── */
 const Mortgage = {
   calc(price, downPct, rate, years) {
@@ -250,7 +419,7 @@ function renderCard(p) {
     </div>
     <div class="card-body">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem">
-        <div class="card-price">${fmt(p.price)}</div>
+        <div class="card-price" data-aed="${p.price}">${fmt(p.price)}</div>
         <span class="card-type-tag">${p.type}</span>
       </div>
       <div class="card-title">${p.title}</div>
@@ -276,8 +445,8 @@ function renderCard(p) {
     <div class="card-footer">
       <button class="btn btn-outline" style="font-size:.68rem;padding:.55rem .8rem"
         onclick="Compare.toggle(${p.id})">${isCmp ? '✓ Comparing' : '+ Compare'}</button>
-      <button class="btn btn-primary" style="font-size:.68rem;padding:.55rem .8rem"
-        onclick="showPropertyDetail(${p.id})">View Details</button>
+      <a class="btn btn-primary" style="font-size:.68rem;padding:.55rem .8rem"
+        href="property.html?id=${p.id}">View Details</a>
     </div>
   </div>`;
 }
@@ -333,7 +502,7 @@ function closeDetailModal() {
 
 /* ─── FILTER ENGINE ──────────────────────────────────────────────────────── */
 const Filter = {
-  state: { area: '', type: '', minPrice: '', maxPrice: '', beds: '', baths: '', features: [], sort: 'featured' },
+  state: { area: '', type: '', minPrice: '', maxPrice: '', beds: '', baths: '', features: [], sort: 'featured', search: '', minSqft: '', furnished: '', page: 1 },
 
   apply() {
     const s = this.state;
@@ -345,7 +514,19 @@ const Filter = {
     if (s.baths)    results = results.filter(p => p.baths >= parseInt(s.baths));
     if (s.minPrice) results = results.filter(p => p.price >= parseFloat(s.minPrice));
     if (s.maxPrice) results = results.filter(p => p.price <= parseFloat(s.maxPrice));
+    if (s.minSqft)  results = results.filter(p => p.sqft >= parseInt(s.minSqft));
+    if (s.furnished === 'furnished')   results = results.filter(p => p.furnished);
+    if (s.furnished === 'unfurnished') results = results.filter(p => !p.furnished);
     if (s.features.length) results = results.filter(p => s.features.every(f => p.features.includes(f)));
+    if (s.search) {
+      const q = s.search.toLowerCase();
+      results = results.filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        p.location.toLowerCase().includes(q) ||
+        p.area.toLowerCase().includes(q) ||
+        p.type.toLowerCase().includes(q)
+      );
+    }
 
     switch (s.sort) {
       case 'price-high': results.sort((a, b) => b.price - a.price); break;
@@ -358,32 +539,67 @@ const Filter = {
   },
 
   renderResults() {
-    const grid   = document.getElementById('listings-grid');
-    const countEl = document.getElementById('listings-count');
+    const grid     = document.getElementById('listings-grid');
+    const countEl  = document.getElementById('listings-count');
     if (!grid) return;
-    const results = this.apply();
+    const results  = this.apply();
+    const perPage  = 12;
+    const shown    = results.slice(0, this.state.page * perPage);
+    const hasMore  = results.length > shown.length;
+
     if (countEl) countEl.textContent = `${results.length} ${results.length === 1 ? 'property' : 'properties'} found`;
     const countEl2 = document.getElementById('listings-count-main');
     if (countEl2) countEl2.textContent = `${results.length} ${results.length === 1 ? 'property' : 'properties'}`;
-    grid.innerHTML = results.length
-      ? results.map(p => renderCard(p)).join('')
+
+    grid.innerHTML = shown.length
+      ? shown.map(p => renderCard(p)).join('')
       : `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--gray)">
           <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--forest);margin-bottom:.5rem">No properties found</div>
           <p>Try adjusting your filters.</p>
           <button class="btn btn-outline" onclick="Filter.clearAll()" style="margin-top:1rem">Clear Filters</button>
         </div>`;
+
+    const lmWrap = document.getElementById('load-more-wrap');
+    if (lmWrap) lmWrap.style.display = hasMore ? 'flex' : 'none';
+
+    if (typeof ListingsMap !== 'undefined' && ListingsMap.active) ListingsMap.update(results);
+
     Compare.updateAll();
+    Currency.updateDOM();
+    pushURLState();
+    RecentlyViewed.render();
   },
 
   clearAll() {
-    this.state = { area: '', type: '', minPrice: '', maxPrice: '', beds: '', baths: '', features: [], sort: 'featured' };
+    this.state = { area: '', type: '', minPrice: '', maxPrice: '', beds: '', baths: '', features: [], sort: 'featured', search: '', minSqft: '', furnished: '', page: 1 };
     document.querySelectorAll('.filter-select').forEach(el => { el.value = ''; });
     document.querySelectorAll('.price-input').forEach(el => { el.value = ''; });
     document.querySelectorAll('.bed-btn').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.filter-check-item input').forEach(el => { el.checked = false; });
+    const s = document.getElementById('filter-search');   if (s) s.value = '';
+    const q = document.getElementById('filter-min-sqft'); if (q) q.value = '';
     this.renderResults();
   }
 };
+
+/* ─── URL STATE ──────────────────────────────────────────────────────────── */
+function pushURLState() {
+  if (!window.location.pathname.includes('listings')) return;
+  const s = Filter.state;
+  const p = new URLSearchParams();
+  if (s.area)     p.set('area', s.area);
+  if (s.type)     p.set('type', s.type);
+  if (s.minPrice) p.set('minPrice', s.minPrice);
+  if (s.maxPrice) p.set('maxPrice', s.maxPrice);
+  if (s.beds)     p.set('beds', s.beds);
+  if (s.baths)    p.set('baths', s.baths);
+  if (s.sort && s.sort !== 'featured') p.set('sort', s.sort);
+  if (s.search)   p.set('q', s.search);
+  if (s.minSqft)  p.set('minSqft', s.minSqft);
+  if (s.furnished) p.set('furnished', s.furnished);
+  const qs = p.toString();
+  history.replaceState(null, '', qs ? '?' + qs : window.location.pathname);
+}
 
 /* ─── NAV BEHAVIOUR ──────────────────────────────────────────────────────── */
 function initNav() {
@@ -541,34 +757,29 @@ function initListingsPage() {
 
   Filter.renderResults();
 
-  // Area filter
-  document.getElementById('filter-area')?.addEventListener('change', e => {
-    Filter.state.area = e.target.value; Filter.renderResults();
+  const wire = (id, key) => document.getElementById(id)?.addEventListener('input', e => {
+    Filter.state[key] = e.target.value; Filter.state.page = 1; Filter.renderResults();
   });
-  document.getElementById('filter-type')?.addEventListener('change', e => {
-    Filter.state.type = e.target.value; Filter.renderResults();
-  });
-  document.getElementById('sort-select')?.addEventListener('change', e => {
-    Filter.state.sort = e.target.value; Filter.renderResults();
-  });
-  document.getElementById('filter-min-price')?.addEventListener('input', e => {
-    Filter.state.minPrice = e.target.value; Filter.renderResults();
-  });
-  document.getElementById('filter-max-price')?.addEventListener('input', e => {
-    Filter.state.maxPrice = e.target.value; Filter.renderResults();
+  const wireChange = (id, key) => document.getElementById(id)?.addEventListener('change', e => {
+    Filter.state[key] = e.target.value; Filter.state.page = 1; Filter.renderResults();
   });
 
+  wireChange('filter-area', 'area');
+  wireChange('filter-type', 'type');
+  wireChange('sort-select', 'sort');
+  wireChange('filter-furnished', 'furnished');
+  wire('filter-min-price', 'minPrice');
+  wire('filter-max-price', 'maxPrice');
+  wire('filter-min-sqft',  'minSqft');
+  wire('filter-search',    'search');
+
   // Bed buttons
-  document.querySelectorAll('.bed-btn').forEach(btn => {
+  document.querySelectorAll('.bed-btn[data-beds]').forEach(btn => {
     btn.addEventListener('click', () => {
       const val = btn.dataset.beds;
       if (Filter.state.beds === val) { Filter.state.beds = ''; btn.classList.remove('active'); }
-      else {
-        document.querySelectorAll('.bed-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        Filter.state.beds = val;
-      }
-      Filter.renderResults();
+      else { document.querySelectorAll('.bed-btn[data-beds]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); Filter.state.beds = val; }
+      Filter.state.page = 1; Filter.renderResults();
     });
   });
 
@@ -576,24 +787,50 @@ function initListingsPage() {
   document.querySelectorAll('.feature-check').forEach(cb => {
     cb.addEventListener('change', () => {
       Filter.state.features = [...document.querySelectorAll('.feature-check:checked')].map(el => el.value);
-      Filter.renderResults();
+      Filter.state.page = 1; Filter.renderResults();
     });
   });
 
-  // View toggle
+  // View toggle (grid / list / map)
   document.querySelectorAll('.view-toggle-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.view-toggle-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const grid2 = document.getElementById('listings-grid');
-      if (btn.dataset.view === 'list') grid2?.classList.add('list-view');
-      else grid2?.classList.remove('list-view');
+      const g = document.getElementById('listings-grid');
+      if (btn.dataset.view === 'list') {
+        g?.classList.add('list-view');
+        ListingsMap.toggle(false);
+      } else if (btn.dataset.view === 'map') {
+        g?.classList.remove('list-view');
+        ListingsMap.toggle(true);
+      } else {
+        g?.classList.remove('list-view');
+        ListingsMap.toggle(false);
+      }
     });
   });
 
-  // Clear
+  // Load more
+  document.getElementById('load-more-btn')?.addEventListener('click', () => {
+    Filter.state.page++;
+    Filter.renderResults();
+  });
+
+  // Copy link
+  document.getElementById('copy-link-btn')?.addEventListener('click', function() {
+    navigator.clipboard?.writeText(window.location.href).then(() => {
+      this.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(() => { this.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Share'; }, 2500);
+    }).catch(() => { prompt('Copy this link:', window.location.href); });
+  });
+
+  // Clear / Apply
   document.getElementById('clear-filters')?.addEventListener('click', () => Filter.clearAll());
-  document.getElementById('apply-filters')?.addEventListener('click', () => Filter.renderResults());
+  document.getElementById('apply-filters')?.addEventListener('click', () => { Filter.state.page = 1; Filter.renderResults(); });
+
+  // Init sidebar extras
+  RecentlyViewed.render();
+  SavedSearches.render();
 }
 
 /* ─── HOME PAGE: FEATURED LISTINGS ──────────────────────────────────────── */
@@ -623,6 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHomeFeatured();
   initListingsPage();
   Mortgage.init();
+  Currency.init();
 
   // Close modals on overlay click
   document.getElementById('compare-modal')?.addEventListener('click', e => {

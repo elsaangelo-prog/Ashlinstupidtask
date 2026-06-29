@@ -607,8 +607,8 @@ const TEAM = [
     title: "CEO & Founding Partner",
     bio: "With over 15 years of luxury real estate experience across Dubai and London, Elsa has guided some of the world's most discerning clients to their dream properties. Her deep knowledge of the UAE market and uncompromising dedication to client excellence have established her as one of Dubai's foremost luxury property advisors.",
     photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&auto=format&fit=crop&q=80",
-    phone: "+971 50 123 4567",
-    email: "elsa@theangelo.ae",
+    phone: "+971 58 539 5932",
+    email: "elsa.angelo@bhomes.com",
     languages: ["English", "Arabic", "French"]
   },
   {
@@ -630,6 +630,39 @@ const TEAM = [
     languages: ["English", "Afrikaans"]
   }
 ];
+
+const PROPERTY_COORDS = {
+  1:  [25.1129, 55.1389],
+  2:  [25.1150, 55.1410],
+  3:  [25.0680, 55.1640],
+  4:  [25.1951, 55.2735],
+  5:  [25.0805, 55.1403],
+  6:  [25.2070, 55.2424],
+  7:  [25.0977, 55.3618],
+  8:  [25.1061, 55.2442],
+  9:  [25.0230, 55.1466],
+  10: [25.1855, 55.2975],
+  11: [25.2112, 55.2817],
+  12: [25.0808, 55.1220],
+  13: [25.1074, 55.1684],
+  14: [25.1100, 55.1350],
+  15: [25.1972, 55.2750],
+  16: [25.0695, 55.1658],
+  17: [25.0820, 55.1420],
+  18: [25.2093, 55.2420],
+  19: [25.1888, 55.2680],
+  20: [25.0990, 55.3630],
+  21: [25.1080, 55.1370],
+  22: [25.1040, 55.2460],
+  23: [25.0215, 55.1480],
+  24: [25.2120, 55.2830],
+  25: [25.1865, 55.2990],
+  26: [25.0902, 55.1298],
+  27: [25.2197, 55.3082],
+  28: [25.1140, 55.1395],
+  29: [25.1960, 55.2742],
+  30: [25.2170, 55.3568],
+};
 
 const TESTIMONIALS = [
   {
