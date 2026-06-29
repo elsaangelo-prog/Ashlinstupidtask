@@ -358,14 +358,37 @@ p  { line-height:1.7; color:var(--gray-dk); }
 .featured-scroll-outer::-webkit-scrollbar { height:3px; }
 .featured-scroll-outer::-webkit-scrollbar-track { background:transparent; }
 .featured-scroll-outer::-webkit-scrollbar-thumb { background:var(--champagne-lt); border-radius:2px; }
-.properties-grid.featured-2row {
+.properties-grid.featured-row {
   display:grid;
-  grid-template-rows:repeat(2,auto);
   grid-auto-flow:column;
   grid-auto-columns:330px;
   gap:1.5rem;
   max-width:none; margin:0;
   width:max-content;
+}
+
+.featured-row-divider {
+  max-width:1300px; margin:2.5rem auto 1.5rem;
+  display:flex; align-items:center; gap:1.5rem;
+}
+.featured-row-divider::before, .featured-row-divider::after {
+  content:''; flex:1; height:1px; background:var(--champagne-lt);
+}
+.featured-row-label {
+  font-size:.72rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--champagne-dk); white-space:nowrap;
+}
+
+/* ── Off-market overlay ──────────────────────────────────────────────── */
+.property-card.off-market .card-image-wrap img {
+  filter:blur(9px); transform:scale(1.06);
+}
+.property-card.off-market .card-image-wrap::after {
+  content:'OFF MARKET';
+  position:absolute; inset:0; z-index:3;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:.72rem; font-weight:700; letter-spacing:.28em;
+  background:rgba(22,37,30,.18);
 }
 .property-card {
   background:var(--white);

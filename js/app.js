@@ -598,10 +598,16 @@ function initListingsPage() {
 
 /* ─── HOME PAGE: FEATURED LISTINGS ──────────────────────────────────────── */
 function initHomeFeatured() {
-  const grid = document.getElementById('featured-grid');
-  if (!grid) return;
-  const featured = PROPERTIES.filter(p => p.badge === 'Exclusive').slice(0, 9);
-  grid.innerHTML = featured.map(p => renderCard(p)).join('');
+  const row1 = document.getElementById('featured-row-1');
+  if (!row1) return;
+  const exclusive = PROPERTIES.filter(p => p.badge === 'Exclusive');
+  row1.innerHTML = exclusive.slice(0, 5).map(p => renderCard(p)).join('');
+  const row2 = document.getElementById('featured-row-2');
+  if (row2) {
+    row2.innerHTML = exclusive.slice(5, 9).map(p =>
+      renderCard(p).replace('class="property-card"', 'class="property-card off-market"')
+    ).join('');
+  }
   Compare.updateAll();
 }
 
