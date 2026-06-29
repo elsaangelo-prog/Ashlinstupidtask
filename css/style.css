@@ -1221,6 +1221,7 @@ p  { line-height:1.7; color:var(--gray-dk); }
   color:var(--champagne);
 }
 .whatsapp-btn svg { width:17px; height:17px; flex-shrink:0; }
+body:has(.compare-bar.visible) .whatsapp-btn { bottom:calc(2rem + 88px); transition:bottom .4s cubic-bezier(.25,.46,.45,.94), transform .2s, box-shadow .2s, border-color .2s; }
 
 /* ─── UTILITIES ──────────────────────────────────────────────────────────── */
 .container { max-width:1300px; margin:0 auto; }
