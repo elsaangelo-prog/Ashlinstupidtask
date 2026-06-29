@@ -780,8 +780,15 @@ async function handleContactForm(e) {
         },
         body: JSON.stringify(payload),
       })
-      .then(r => { if (!r.ok) throw new Error('supabase ' + r.status); return true; })
-      .catch(e => { console.warn('Supabase error:', e); return false; })
+      .then(async r => {
+        if (!r.ok) { const t = await r.text(); throw new Error(r.status + ': ' + t); }
+        return true;
+      })
+      .catch(e => {
+        document.getElementById('cform-error').textContent = 'DB error — ' + e.message;
+        document.getElementById('cform-error').style.display = 'block';
+        return false;
+      })
     );
   }
 
