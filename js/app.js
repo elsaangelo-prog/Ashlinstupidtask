@@ -273,24 +273,7 @@ const RecentlyViewed = {
     if (list.length > this.max) list.length = this.max;
     try { localStorage.setItem(this.key, JSON.stringify(list)); } catch {}
   },
-  render() {
-    const el = document.getElementById('recently-viewed-list');
-    if (!el) return;
-    const ids   = this.get();
-    const props = ids.map(id => PROPERTIES.find(p => p.id === id)).filter(Boolean);
-    const sec   = document.getElementById('recently-viewed-section');
-    if (!props.length) { if (sec) sec.style.display = 'none'; return; }
-    if (sec) sec.style.display = 'block';
-    el.innerHTML = props.map(p => `
-      <a href="property.html?id=${p.id}" class="rv-item">
-        <img class="rv-item-img" src="${p.image}" alt="${p.title}" loading="lazy">
-        <div class="rv-item-body">
-          <div class="rv-item-title">${p.title}</div>
-          <div class="rv-item-price" data-aed="${p.price}">${fmt(p.price)}</div>
-        </div>
-      </a>`).join('');
-    this.renderBanner();
-  },
+  render() { this.renderBanner(); },
   renderBanner() {
     const sec  = document.getElementById('rv-banner-section');
     const list = document.getElementById('rv-banner-list');
