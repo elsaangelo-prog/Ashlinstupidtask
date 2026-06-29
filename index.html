@@ -398,36 +398,171 @@
     <h2 class="section-title">Begin your journey</h2>
     <p class="section-sub">Whether you are seeking your dream home or a world-class investment, our advisors are ready to guide you with discretion and expertise.</p>
   </div>
-  <div style="max-width:680px;margin:0 auto">
-    <form onsubmit="handleContactForm(event)" style="display:grid;gap:1.25rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">First Name</label>
-          <input type="text" placeholder="James" required
-            style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+  <div class="cform-wrap">
+    <form id="contact-form" onsubmit="handleContactForm(event)" novalidate>
+      <div class="cform-row">
+        <div class="cform-group">
+          <label class="cform-label">First Name</label>
+          <input type="text" name="first_name" placeholder="James" required class="cform-input" autocomplete="given-name">
         </div>
-        <div>
-          <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Last Name</label>
-          <input type="text" placeholder="Whitfield" required
-            style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+        <div class="cform-group">
+          <label class="cform-label">Last Name</label>
+          <input type="text" name="last_name" placeholder="Whitfield" required class="cform-input" autocomplete="family-name">
         </div>
       </div>
-      <div>
-        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Email</label>
-        <input type="email" placeholder="james@example.com" required
-          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+      <div class="cform-group">
+        <label class="cform-label">Email</label>
+        <input type="email" name="email" placeholder="james@example.com" required class="cform-input" autocomplete="email">
       </div>
-      <div>
-        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Phone</label>
-        <input type="tel" placeholder="+971 50 000 0000"
-          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none">
+      <div class="cform-group">
+        <label class="cform-label">Phone</label>
+        <div class="cform-phone-wrap">
+          <select name="dial_code" class="cform-dial">
+            <option value="+971">🇦🇪 +971</option>
+            <option value="+966">🇸🇦 +966</option>
+            <option value="+974">🇶🇦 +974</option>
+            <option value="+973">🇧🇭 +973</option>
+            <option value="+965">🇰🇼 +965</option>
+            <option value="+968">🇴🇲 +968</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+1-CA">🇨🇦 +1</option>
+            <option value="+91">🇮🇳 +91</option>
+            <option value="+86">🇨🇳 +86</option>
+            <option value="+7">🇷🇺 +7</option>
+            <option value="+54">🇦🇷 +54</option>
+            <option value="+43">🇦🇹 +43</option>
+            <option value="+32">🇧🇪 +32</option>
+            <option value="+55">🇧🇷 +55</option>
+            <option value="+359">🇧🇬 +359</option>
+            <option value="+45">🇩🇰 +45</option>
+            <option value="+20">🇪🇬 +20</option>
+            <option value="+358">🇫🇮 +358</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+30">🇬🇷 +30</option>
+            <option value="+852">🇭🇰 +852</option>
+            <option value="+36">🇭🇺 +36</option>
+            <option value="+62">🇮🇩 +62</option>
+            <option value="+353">🇮🇪 +353</option>
+            <option value="+972">🇮🇱 +972</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+962">🇯🇴 +962</option>
+            <option value="+254">🇰🇪 +254</option>
+            <option value="+961">🇱🇧 +961</option>
+            <option value="+60">🇲🇾 +60</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+212">🇲🇦 +212</option>
+            <option value="+31">🇳🇱 +31</option>
+            <option value="+64">🇳🇿 +64</option>
+            <option value="+234">🇳🇬 +234</option>
+            <option value="+47">🇳🇴 +47</option>
+            <option value="+92">🇵🇰 +92</option>
+            <option value="+63">🇵🇭 +63</option>
+            <option value="+48">🇵🇱 +48</option>
+            <option value="+351">🇵🇹 +351</option>
+            <option value="+40">🇷🇴 +40</option>
+            <option value="+65">🇸🇬 +65</option>
+            <option value="+27">🇿🇦 +27</option>
+            <option value="+82">🇰🇷 +82</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+94">🇱🇰 +94</option>
+            <option value="+46">🇸🇪 +46</option>
+            <option value="+41">🇨🇭 +41</option>
+            <option value="+886">🇹🇼 +886</option>
+            <option value="+66">🇹🇭 +66</option>
+            <option value="+90">🇹🇷 +90</option>
+            <option value="+380">🇺🇦 +380</option>
+            <option value="+84">🇻🇳 +84</option>
+          </select>
+          <input type="tel" name="phone" placeholder="50 000 0000" class="cform-input cform-phone-input" autocomplete="tel">
+        </div>
       </div>
-      <div>
-        <label style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--forest);display:block;margin-bottom:.5rem">Message</label>
-        <textarea rows="4" placeholder="I am looking for a luxury villa on Palm Jumeirah..."
-          style="width:100%;padding:.85rem 1rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;resize:vertical"></textarea>
+      <div class="cform-group">
+        <label class="cform-label">Country of Residence</label>
+        <select name="country" class="cform-input cform-select">
+          <option value="" disabled selected>Select country…</option>
+          <option>United Arab Emirates</option>
+          <option>Saudi Arabia</option>
+          <option>Qatar</option>
+          <option>Kuwait</option>
+          <option>Bahrain</option>
+          <option>Oman</option>
+          <option>United States</option>
+          <option>United Kingdom</option>
+          <option>Australia</option>
+          <option>Canada</option>
+          <option>New Zealand</option>
+          <option>Afghanistan</option>
+          <option>Argentina</option>
+          <option>Austria</option>
+          <option>Belgium</option>
+          <option>Brazil</option>
+          <option>Bulgaria</option>
+          <option>China</option>
+          <option>Croatia</option>
+          <option>Cyprus</option>
+          <option>Czech Republic</option>
+          <option>Denmark</option>
+          <option>Egypt</option>
+          <option>Finland</option>
+          <option>France</option>
+          <option>Germany</option>
+          <option>Ghana</option>
+          <option>Greece</option>
+          <option>Hong Kong</option>
+          <option>Hungary</option>
+          <option>India</option>
+          <option>Indonesia</option>
+          <option>Ireland</option>
+          <option>Israel</option>
+          <option>Italy</option>
+          <option>Japan</option>
+          <option>Jordan</option>
+          <option>Kenya</option>
+          <option>Lebanon</option>
+          <option>Malaysia</option>
+          <option>Mexico</option>
+          <option>Morocco</option>
+          <option>Netherlands</option>
+          <option>Nigeria</option>
+          <option>Norway</option>
+          <option>Pakistan</option>
+          <option>Philippines</option>
+          <option>Poland</option>
+          <option>Portugal</option>
+          <option>Romania</option>
+          <option>Russia</option>
+          <option>Singapore</option>
+          <option>South Africa</option>
+          <option>South Korea</option>
+          <option>Spain</option>
+          <option>Sri Lanka</option>
+          <option>Sweden</option>
+          <option>Switzerland</option>
+          <option>Taiwan</option>
+          <option>Thailand</option>
+          <option>Turkey</option>
+          <option>Ukraine</option>
+          <option>Vietnam</option>
+        </select>
       </div>
-      <button type="submit" class="btn btn-primary" style="justify-content:center;padding:1rem">Send enquiry</button>
+      <div class="cform-group">
+        <label class="cform-label">Message</label>
+        <textarea name="message" rows="5" placeholder="I am looking for a luxury villa on Palm Jumeirah…" class="cform-input cform-textarea"></textarea>
+      </div>
+      <button type="submit" class="cform-submit" id="cform-btn">
+        Send Enquiry
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+      <div id="cform-success" class="cform-notice cform-notice-ok" style="display:none">
+        Thank you — one of our advisors will be in touch within 24 hours.
+      </div>
+      <div id="cform-error" class="cform-notice cform-notice-err" style="display:none">
+        Something went wrong. Please reach us directly on WhatsApp or email elsa.angelo@bhomes.com
+      </div>
     </form>
   </div>
 </section>
@@ -585,9 +720,99 @@ function toggleFavPanel() {
   else          document.body.classList.remove('no-scroll');
 }
 
-function handleContactForm(e) {
+// ── CONFIGURE BEFORE GOING LIVE ─────────────────────────────────────────────
+// 1. Supabase: create project at supabase.com, run the SQL below, paste URL + anon key
+//    CREATE TABLE enquiries (
+//      id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+//      created_at timestamptz DEFAULT now(),
+//      first_name text, last_name text, email text NOT NULL,
+//      phone text, country text, message text, source text
+//    );
+//    ALTER TABLE enquiries ENABLE ROW LEVEL SECURITY;
+//    CREATE POLICY "public insert" ON enquiries FOR INSERT TO anon WITH CHECK (true);
+//
+// 2. Web3Forms: sign up free at web3forms.com with elsa.angelo@bhomes.com → get access key
+// ─────────────────────────────────────────────────────────────────────────────
+const SUPABASE_URL      = 'https://YOUR_PROJECT_ID.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const WEB3FORMS_KEY     = 'YOUR_WEB3FORMS_ACCESS_KEY';
+
+async function handleContactForm(e) {
   e.preventDefault();
-  e.target.innerHTML = '<div style="text-align:center;padding:3rem"><div style="font-family:\'Cormorant Garamond\',serif;font-size:2rem;color:var(--forest);margin-bottom:.5rem">Thank You</div><p>One of our advisors will be in touch within 24 hours.</p></div>';
+  const form    = document.getElementById('contact-form');
+  const btn     = document.getElementById('cform-btn');
+  const success = document.getElementById('cform-success');
+  const errEl   = document.getElementById('cform-error');
+  success.style.display = 'none';
+  errEl.style.display   = 'none';
+
+  // Basic client-side validation
+  const firstName = form.first_name.value.trim();
+  const lastName  = form.last_name.value.trim();
+  const email     = form.email.value.trim();
+  if (!firstName || !lastName || !email) return;
+
+  btn.disabled = true;
+  btn.innerHTML = 'Sending… <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+
+  const dialRaw = form.dial_code.value;
+  const payload = {
+    first_name: firstName,
+    last_name:  lastName,
+    email:      email,
+    phone:      dialRaw.replace(/-[A-Z]+$/, '') + ' ' + form.phone.value.trim(),
+    country:    form.country.value,
+    message:    form.message.value.trim(),
+    source:     window.location.href,
+  };
+
+  const jobs = [];
+
+  if (!SUPABASE_URL.includes('YOUR_')) {
+    jobs.push(fetch(SUPABASE_URL + '/rest/v1/enquiries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal',
+      },
+      body: JSON.stringify(payload),
+    }));
+  }
+
+  if (!WEB3FORMS_KEY.includes('YOUR_')) {
+    jobs.push(fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: 'New Enquiry — ' + firstName + ' ' + lastName,
+        from_name: 'The Angelo Collection',
+        replyto: email,
+        'First Name': firstName, 'Last Name': lastName,
+        Email: email, Phone: payload.phone,
+        Country: payload.country, Message: payload.message,
+        Source: payload.source,
+      }),
+    }));
+  }
+
+  // Dev mode (no keys set): show success without sending
+  if (!jobs.length) {
+    success.style.display = 'block';
+    form.reset();
+  } else {
+    try {
+      const results = await Promise.allSettled(jobs);
+      const anyOk   = results.some(r => r.status === 'fulfilled' && r.value.ok);
+      if (anyOk) { success.style.display = 'block'; form.reset(); }
+      else        { errEl.style.display = 'block'; }
+    } catch { errEl.style.display = 'block'; }
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Send Enquiry <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 }
 
 // Fix mortgage display

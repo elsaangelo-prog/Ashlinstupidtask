@@ -1610,3 +1610,65 @@ body:has(.compare-bar.visible) .whatsapp-btn { bottom:calc(2rem + 88px); transit
   font-weight: 600;
 }
 .no-scroll { overflow:hidden; }
+
+/* ─── CONTACT FORM ────────────────────────────────────────────────────────── */
+.cform-wrap { max-width:680px; margin:0 auto; }
+.cform-row  { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; }
+.cform-group { display:flex; flex-direction:column; gap:.45rem; }
+.cform-label {
+  font-size:.66rem; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--forest);
+}
+.cform-input {
+  width:100%; box-sizing:border-box;
+  padding:.9rem 1rem;
+  border:1px solid var(--border);
+  border-radius:4px;
+  font-size:.9rem; font-family:var(--font-sans);
+  color:var(--navy-deep);
+  background:#fff;
+  outline:none;
+  transition:border-color .2s;
+}
+.cform-input:focus { border-color:var(--forest); }
+.cform-input::placeholder { color:#bbb; }
+.cform-phone-wrap {
+  display:flex;
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  background:#fff;
+  transition:border-color .2s;
+}
+.cform-phone-wrap:focus-within { border-color:var(--forest); }
+.cform-dial {
+  flex-shrink:0; min-width:105px;
+  padding:.9rem .5rem .9rem .75rem;
+  border:none; border-right:1px solid var(--border);
+  background:#f8f6f2;
+  font-size:.88rem; font-family:var(--font-sans);
+  color:var(--navy-deep);
+  cursor:pointer; outline:none;
+}
+.cform-phone-input { border:none !important; border-radius:0 !important; flex:1; }
+.cform-select { cursor:pointer; }
+.cform-textarea { resize:vertical; min-height:130px; }
+.cform-submit {
+  display:flex; align-items:center; justify-content:center; gap:.55rem;
+  width:100%; padding:1.15rem;
+  background:var(--forest); color:var(--champagne-lt);
+  border:none; border-radius:4px;
+  font-size:.7rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+  font-family:var(--font-sans);
+  cursor:pointer; transition:background .2s;
+  margin-top:.25rem;
+}
+.cform-submit:hover:not(:disabled) { background:#1c3229; }
+.cform-submit:disabled { opacity:.6; cursor:default; }
+.cform-notice {
+  padding:.9rem 1.1rem; border-radius:4px;
+  font-size:.86rem; text-align:center; line-height:1.5;
+}
+.cform-notice-ok  { background:#eaf4ed; color:#2d6a44; border:1px solid #c3e6cb; }
+.cform-notice-err { background:#fdf0f0; color:#9b3030; border:1px solid #f5c6c6; }
+@media (max-width:560px) { .cform-row { grid-template-columns:1fr; } }
