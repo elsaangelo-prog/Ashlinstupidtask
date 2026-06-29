@@ -143,6 +143,7 @@ function initPropertyPage() {
   Favourites.updateBadge();
   Compare.updateAll();
   Currency.updateDOM();
+  RecentlyViewed.renderBanner();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1468,5 +1468,73 @@ body:has(.compare-bar.visible) .whatsapp-btn { bottom:calc(2rem + 88px); transit
   .prop-similar-section { padding:3rem 1.25rem; }
   .currency-switcher { display:none; }
   .filter-search-wrap { max-width:none; }
+  .rv-banner-section { padding:2.5rem 0 3rem; }
+  .rv-banner-card { flex:0 0 180px; }
+  .rv-banner-img { height:120px; }
+}
+
+/* ─── RECENTLY VIEWED BANNER ──────────────────────────────────────────────── */
+.rv-banner-section {
+  background: var(--navy-deep);
+  padding: 3.5rem 0 4rem;
+  border-top: 1px solid rgba(209,175,113,0.15);
+}
+.rv-banner-inner { max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+.rv-banner-header { margin-bottom: 1.75rem; }
+.rv-banner-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  color: var(--champagne-lt);
+  margin: 0.3rem 0 0;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.rv-banner-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(209,175,113,0.3) transparent;
+}
+.rv-banner-scroll::-webkit-scrollbar { height: 4px; }
+.rv-banner-scroll::-webkit-scrollbar-track { background: transparent; }
+.rv-banner-scroll::-webkit-scrollbar-thumb { background: rgba(209,175,113,0.3); border-radius: 2px; }
+.rv-banner-list {
+  display: flex;
+  gap: 1.25rem;
+  padding-bottom: 0.75rem;
+  min-width: max-content;
+}
+.rv-banner-card {
+  flex: 0 0 230px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(209,175,113,0.15);
+  text-decoration: none;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  display: block;
+}
+.rv-banner-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(209,175,113,0.45);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+.rv-banner-img { width: 100%; height: 148px; object-fit: cover; display: block; }
+.rv-banner-body { padding: 0.85rem 1rem 1.1rem; }
+.rv-banner-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--champagne-lt);
+  letter-spacing: 0.02em;
+  line-height: 1.38;
+  margin-bottom: 0.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rv-banner-price {
+  font-size: 0.84rem;
+  color: var(--champagne);
+  font-weight: 600;
 }
 .no-scroll { overflow:hidden; }

@@ -247,6 +247,25 @@ const RecentlyViewed = {
           <div class="rv-item-price" data-aed="${p.price}">${fmt(p.price)}</div>
         </div>
       </a>`).join('');
+    this.renderBanner();
+  },
+  renderBanner() {
+    const sec  = document.getElementById('rv-banner-section');
+    const list = document.getElementById('rv-banner-list');
+    if (!sec || !list) return;
+    const ids   = this.get();
+    const props = ids.map(id => PROPERTIES.find(p => p.id === id)).filter(Boolean);
+    if (!props.length) { sec.style.display = 'none'; return; }
+    sec.style.display = 'block';
+    list.innerHTML = props.map(p => `
+      <a href="property.html?id=${p.id}" class="rv-banner-card">
+        <img class="rv-banner-img" src="${p.image}" alt="${p.title}" loading="lazy">
+        <div class="rv-banner-body">
+          <div class="rv-banner-name">${p.title}</div>
+          <div class="rv-banner-price" data-aed="${p.price}">${fmt(p.price)}</div>
+        </div>
+      </a>`).join('');
+    Currency.updateDOM();
   }
 };
 
