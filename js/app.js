@@ -731,7 +731,16 @@ function initTestimonials() {
   const track = document.getElementById('testimonials-track');
   if (!track || typeof TESTIMONIALS === 'undefined' || !TESTIMONIALS.length) return;
 
-  track.innerHTML = TESTIMONIALS.map(t => `
+  track.innerHTML = TESTIMONIALS.map(t => t.video ? `
+    <div class="testimonial-card testimonial-card--video">
+      <video class="testi-video" src="${t.video}" playsinline preload="metadata" poster="" controls></video>
+      <div class="testimonial-author" style="margin-top:1rem">
+        <div>
+          <div class="testimonial-name">${t.name}</div>
+          <div class="testimonial-detail">${t.detail}</div>
+        </div>
+      </div>
+    </div>` : `
     <div class="testimonial-card">
       <span class="testimonial-quote-mark">"</span>
       <p class="testimonial-text">${t.quote}</p>

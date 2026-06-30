@@ -587,6 +587,14 @@ p  { line-height:1.7; color:var(--gray-dk); }
   transition:transform var(--transition), box-shadow var(--transition);
 }
 .testimonial-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+.testimonial-card--video { padding:1.25rem; background:var(--forest); border-top-color:var(--champagne); }
+.testimonial-card--video .testimonial-name { color:var(--champagne-lt); }
+.testimonial-card--video .testimonial-detail { color:rgba(240,232,216,0.55); }
+.testi-video {
+  width:100%; border-radius:8px;
+  display:block; aspect-ratio:9/16;
+  object-fit:cover; background:#000;
+}
 .testimonial-quote-mark {
   font-family:'Cormorant Garamond',serif;
   font-size:5rem; line-height:.7;

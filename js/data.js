@@ -718,5 +718,11 @@ const TESTIMONIALS = [
     name: "Jonathan Hartley",
     detail: "Investment Portfolio, AED 75M",
     photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
+  },
+  {
+    video: "videos/ashlin-testimonial.mov",
+    name: "Ashlin",
+    detail: "Client, The Angelo Collection",
+    photo: ""
   }
 ];
