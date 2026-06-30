@@ -741,9 +741,9 @@ function toggleFavPanel() {
 const SUPABASE_URL      = 'https://paohznopxoupwmnmoxgo.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhb2h6bm9weG91cHdtbm1veGdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTA2NDksImV4cCI6MjA5ODMyNjY0OX0.uB8IDH-IMzlPiA4NThwWGsMUGbOuH-dekieD_qPkiY0';
 const WEB3FORMS_KEY     = '953d55e0-293c-4b19-a8ab-23596bd4425d';
-const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY  = 'fbhMAwLxA5dvg6fLy';
+const EMAILJS_SERVICE_ID  = 'service_ww8fgig';
+const EMAILJS_TEMPLATE_ID = 'template_x870nhe';
 
 function confirmationEmailHtml(firstName) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head><body style="margin:0;padding:0;background:#f4f0eb;font-family:Georgia,serif">
@@ -863,8 +863,9 @@ async function handleContactForm(e) {
       form.reset();
       if (!EMAILJS_PUBLIC_KEY.includes('YOUR_')) {
         emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-          to_email: email,
-          to_name:  firstName,
+          to_email:  email,
+          to_name:   firstName,
+          name:      'The Angelo Collection',
           html_body: confirmationEmailHtml(firstName),
         }, EMAILJS_PUBLIC_KEY).catch(err => console.warn('EmailJS error:', err));
       }
