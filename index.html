@@ -14,7 +14,8 @@
 <meta name="twitter:title" content="The Angelo Collection — Luxury Real Estate Dubai">
 <meta name="twitter:description" content="Dubai's most coveted addresses. Extraordinary properties curated exclusively.">
 <meta name="twitter:image" content="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&auto=format&fit=crop&q=80">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -402,8 +403,9 @@
     <form id="contact-form" onsubmit="handleContactForm(event)" novalidate>
       <div class="cform-row">
         <div class="cform-group">
-          <label class="cform-label">First Name</label>
-          <input type="text" name="first_name" placeholder="James" required class="cform-input" autocomplete="given-name">
+          <label class="cform-label">First Name <span class="cform-req">*</span></label>
+          <input type="text" name="first_name" placeholder="James" class="cform-input" autocomplete="given-name">
+          <span class="cform-field-err" id="err-first_name">Please enter your first name</span>
         </div>
         <div class="cform-group">
           <label class="cform-label">Last Name</label>
@@ -411,12 +413,13 @@
         </div>
       </div>
       <div class="cform-group">
-        <label class="cform-label">Email</label>
-        <input type="email" name="email" placeholder="james@example.com" required class="cform-input" autocomplete="email">
+        <label class="cform-label">Email <span class="cform-req">*</span></label>
+        <input type="email" name="email" placeholder="james@example.com" class="cform-input" autocomplete="email">
+        <span class="cform-field-err" id="err-email">Please enter a valid email address</span>
       </div>
       <div class="cform-group">
-        <label class="cform-label">Phone</label>
-        <div class="cform-phone-wrap">
+        <label class="cform-label">Phone <span class="cform-req">*</span></label>
+        <div class="cform-phone-wrap" id="phone-wrap">
           <select name="dial_code" class="cform-dial">
             <option value="+971">🇦🇪 +971</option>
             <option value="+966">🇸🇦 +966</option>
@@ -479,6 +482,7 @@
           </select>
           <input type="tel" name="phone" placeholder="50 000 0000" class="cform-input cform-phone-input" autocomplete="tel">
         </div>
+        <span class="cform-field-err" id="err-phone">Please enter your phone number</span>
       </div>
       <div class="cform-group">
         <label class="cform-label">Country of Residence</label>
@@ -732,10 +736,22 @@ function toggleFavPanel() {
 //    CREATE POLICY "public insert" ON enquiries FOR INSERT TO anon WITH CHECK (true);
 //
 // 2. Web3Forms: sign up free at web3forms.com with elsa.angelo@bhomes.com → get access key
+// 3. EmailJS: sign up at emailjs.com → create Gmail service + template → paste 3 values below
 // ─────────────────────────────────────────────────────────────────────────────
 const SUPABASE_URL      = 'https://paohznopxoupwmnmoxgo.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhb2h6bm9weG91cHdtbm1veGdvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NTA2NDksImV4cCI6MjA5ODMyNjY0OX0.uB8IDH-IMzlPiA4NThwWGsMUGbOuH-dekieD_qPkiY0';
 const WEB3FORMS_KEY     = '953d55e0-293c-4b19-a8ab-23596bd4425d';
+const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+
+function confirmationEmailHtml(firstName) {
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head><body style="margin:0;padding:0;background:#f4f0eb;font-family:Georgia,serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#1a2e1a"><tr><td align="center" style="padding:44px 20px 36px"><p style="margin:0 0 8px;color:#c8a96e;font-size:10px;letter-spacing:0.35em;text-transform:uppercase;font-family:Arial,sans-serif">&#8212;&#160;THE COLLECTION&#160;&#8212;</p><p style="margin:0;color:#f0e8d8;font-size:52px;letter-spacing:0.12em;font-family:Georgia,serif;font-weight:normal">ANGELO</p></td></tr><tr><td style="height:2px;background:linear-gradient(90deg,transparent,#c8a96e 30%,#c8a96e 70%,transparent)"></td></tr></table>
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f0eb"><tr><td align="center" style="padding:52px 24px 44px"><table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%"><tr><td style="padding:0 0 24px"><p style="margin:0;color:#1a2e1a;font-size:23px;font-family:Georgia,serif;font-weight:normal">Dear ${firstName},</p></td></tr><tr><td style="padding:0 0 24px"><p style="margin:0 0 18px;color:#3a3a2e;font-size:15px;line-height:1.85;font-family:Arial,sans-serif">Thank you for reaching out to <strong style="color:#1a2e1a">The Angelo Collection</strong>. We are delighted to have received your enquiry and want you to know it is in the hands of our most dedicated advisors.</p><p style="margin:0 0 18px;color:#3a3a2e;font-size:15px;line-height:1.85;font-family:Arial,sans-serif">At The Angelo Collection, we believe that finding the perfect property is a deeply personal journey — one that deserves the highest level of attention, expertise, and discretion. We will review the details of your enquiry and be in touch within <strong style="color:#1a2e1a">24 hours</strong> to begin curating a bespoke selection tailored to your vision.</p><p style="margin:0;color:#3a3a2e;font-size:15px;line-height:1.85;font-family:Arial,sans-serif">Should you wish to speak with us immediately, please do not hesitate to reach out.</p></td></tr><tr><td style="padding:28px 0;border-top:1px solid rgba(26,46,26,0.12);border-bottom:1px solid rgba(26,46,26,0.12)"><p style="margin:0 0 3px;color:#9a8a68;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-family:Arial,sans-serif">Your advisor</p><p style="margin:0 0 2px;color:#1a2e1a;font-size:18px;font-family:Georgia,serif;font-weight:normal">Elsa Angelo</p><p style="margin:0 0 10px;color:#6a6a56;font-size:13px;font-family:Arial,sans-serif">Principal Advisor, The Angelo Collection</p><p style="margin:0;font-size:13px;font-family:Arial,sans-serif"><a href="tel:+971585395932" style="color:#9a8a68;text-decoration:none">+971 58 539 5932</a><span style="color:#c8b89a;margin:0 10px">&middot;</span><a href="mailto:elsa.angelo@bhomes.com" style="color:#9a8a68;text-decoration:none">elsa.angelo@bhomes.com</a></p></td></tr></table></td></tr></table>
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#1a2e1a"><tr><td align="center" style="padding:32px 20px"><p style="margin:0 0 16px;color:rgba(240,232,216,0.45);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;font-family:Arial,sans-serif">Follow our journey</p><table cellpadding="0" cellspacing="0" style="margin:0 auto 18px"><tr><td style="padding:0 10px;text-align:center"><div style="width:36px;height:36px;border-radius:50%;background:rgba(200,169,110,0.15);border:1px solid rgba(200,169,110,0.35);display:table-cell;vertical-align:middle;text-align:center;line-height:36px"><span style="color:#c8a96e;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.05em">IG</span></div></td><td style="padding:0 10px;text-align:center"><div style="width:36px;height:36px;border-radius:50%;background:rgba(200,169,110,0.15);border:1px solid rgba(200,169,110,0.35);display:table-cell;vertical-align:middle;text-align:center;line-height:36px"><span style="color:#c8a96e;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.03em">in</span></div></td></tr></table><p style="margin:0;color:rgba(240,232,216,0.3);font-size:11px;font-family:Arial,sans-serif">&copy; 2025 The Angelo Collection &middot; Dubai, UAE</p></td></tr></table>
+</body></html>`;
+}
 
 async function handleContactForm(e) {
   e.preventDefault();
@@ -746,11 +762,36 @@ async function handleContactForm(e) {
   success.style.display = 'none';
   errEl.style.display   = 'none';
 
-  // Basic client-side validation
+  // Inline validation for required fields
   const firstName = form.first_name.value.trim();
-  const lastName  = form.last_name.value.trim();
   const email     = form.email.value.trim();
-  if (!firstName || !lastName || !email) return;
+  const phone     = form.phone.value.trim();
+  let hasErr = false;
+  ['first_name','email','phone'].forEach(f => {
+    document.getElementById('err-' + f).style.display = 'none';
+    const el = f === 'phone' ? document.getElementById('phone-wrap') : form[f];
+    el.classList.remove('invalid');
+  });
+  if (!firstName) {
+    document.getElementById('err-first_name').style.display = 'block';
+    form.first_name.classList.add('invalid');
+    hasErr = true;
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('err-email').style.display = 'block';
+    form.email.classList.add('invalid');
+    hasErr = true;
+  }
+  if (!phone) {
+    document.getElementById('err-phone').style.display = 'block';
+    document.getElementById('phone-wrap').classList.add('invalid');
+    hasErr = true;
+  }
+  if (hasErr) {
+    form.querySelector('.invalid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  const lastName = form.last_name.value.trim();
 
   btn.disabled = true;
   btn.innerHTML = 'Sending… <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
@@ -784,11 +825,7 @@ async function handleContactForm(e) {
         if (!r.ok) { const t = await r.text(); throw new Error(r.status + ': ' + t); }
         return true;
       })
-      .catch(e => {
-        document.getElementById('cform-error').textContent = 'DB error — ' + e.message;
-        document.getElementById('cform-error').style.display = 'block';
-        return false;
-      })
+      .catch(e => { console.warn('Supabase error:', e); return false; })
     );
   }
 
@@ -821,8 +858,19 @@ async function handleContactForm(e) {
   } else {
     const results = await Promise.all(jobs);
     const anyOk   = results.some(r => r === true);
-    if (anyOk) { success.style.display = 'block'; form.reset(); }
-    else        { errEl.style.display = 'block'; }
+    if (anyOk) {
+      success.style.display = 'block';
+      form.reset();
+      if (!EMAILJS_PUBLIC_KEY.includes('YOUR_')) {
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          to_email: email,
+          to_name:  firstName,
+          html_body: confirmationEmailHtml(firstName),
+        }, EMAILJS_PUBLIC_KEY).catch(err => console.warn('EmailJS error:', err));
+      }
+    } else {
+      errEl.style.display = 'block';
+    }
   }
 
   btn.disabled = false;
